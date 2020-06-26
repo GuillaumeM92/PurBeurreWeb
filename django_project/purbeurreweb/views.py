@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+
 def home(request):
-	return HttpResponse("<h1>PurBeurre Home</h1>")
+    return render(request, 'purbeurreweb/home.html')
+
 
 def about(request):
-	return HttpResponse("<h1>PurBeurre About</h1>")
+    return render(request, 'purbeurreweb/about.html', {'title': 'About'})
