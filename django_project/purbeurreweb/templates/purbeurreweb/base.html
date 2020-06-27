@@ -2,15 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+
         {% if title %}
             <title>PurBeurre Web - {{ title }}</title>
         {% else %}
             <title>PurBeurre Web</title>
         {% endif %}
+
         <!-- Favicon-->
         <link rel="icon" type="image/png" href="{% static 'purbeurreweb/css/styles.css' %}">
         <!-- Font Awesome icons (free version)-->
@@ -27,32 +30,35 @@
         <link rel="stylesheet" type="text/css" href="{% static 'purbeurreweb/css/styles.css' %}">
     </head>
     <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-            <div class="container">
 
+        <!-- Navigation-->
+        {% block navbar %}
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        {% endblock %}
+            <div class="container">
                 <a class="navbar-brand js-scroll-trigger" href="/"><img src="{% static 'purbeurreweb/assets/img/icones/logo_pur_beurre.png' %}" alt="Logo Pur Beurre" id="logopb-icon">Pur Beurre</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                        <li class="nav-item"><input type="text" id="search-top" placeholder="Mon Produit..." title="Rechercher" href="/produits" type="submit"></li>
+                        <li class="nav-item"><input type="text" id="search-top" placeholder="Mon Produit..." title="Rechercher" href="/products" type="submit"></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#"><img src="{% static 'purbeurreweb/assets/img/icones/Login.png' %}" alt="Login" title="Se connecter" id="login-icon"></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#"><img src="{% static 'purbeurreweb/assets/img/icones/Register.png' %}" alt="Register" title="Créer un compte" id="register-icon"></a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/register"><img src="{% static 'purbeurreweb/assets/img/icones/Register.png' %}" alt="Register" title="Créer un compte" id="register-icon"></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-
         <div role="main">
             {% block content %}{% endblock %}
         </div>
 
         <!-- Footer-->
-        <footer class="bg-light py-5">
-            <div class="container"><div class="small text-center text-muted-darker">Copyright © 2020 - Start Bootstrap</div>
-            <div class="container"><div class="small text-center text-muted-darker">Projet réalisé par Guillaume Merle</div>
-            <div class="container"><div class="small text-center text-muted"><a href="#mentions">Mentions légales</a>  |  <a href="#contact">Contact</a></div>
-        </div>
+        {% block footer %}
+        <footer class="bg-moules-dim py-5">
+            <div class="container"><div class="small text-center text-light">Copyright © 2020 - Start Bootstrap</div>
+            <div class="container"><div class="small text-center text-light">Projet réalisé par Guillaume Merle</div>
+            <div class="container"><div class="small text-center text-muted"><a href="#mentions">Mentions légales</a> | <a href="#contact">Contact</a></div>
         </footer>
+        {% endblock %}
+
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
@@ -61,5 +67,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
         <!-- Core theme JS-->
         <script src="{% static 'purbeurreweb/js/scripts.js' %}" ></script>
+
     </body>
 </html>

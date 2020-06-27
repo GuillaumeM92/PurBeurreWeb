@@ -1,8 +1,14 @@
 {% extends "purbeurreweb/base.html" %}
 {% block content %}
+
 <!-- Masthead-->
 <header class="masthead">
   <div class="container h-100">
+      {% if messages %}
+          {% for message in messages %}
+              <div id="alert-message"><b>{{ message }}</b></div>
+          {% endfor %}
+      {% endif %}
       <div class="row h-100 align-items-center justify-content-center text-center">
           <div class="col-lg-10 align-self-end">
               <h1 class="text-uppercase text-white font-weight-bold">DU GRAS, OUI, MAIS DE QUALITÉ !</h1>
@@ -11,12 +17,13 @@
           <div class="col-lg-8 align-self-baseline">
               <p class="text-white-85 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours</p>
               <form>
-                  <input type="text" id="search-middle" placeholder="Mon Produit..." title="Entrer un produit" type="submit" ><a class="btn btn-primary btn-xl js-scroll-trigger" id="search-button" href="/produits"><img src="static/purbeurreweb/assets/img/icones/Search.png" alt="Register" title="Rechercher" id="search-icon"></a>
+                  <input type="text" id="search-middle" placeholder="Mon Produit..." title="Entrer un produit" type="submit" ><a class="btn btn-primary btn-xl js-scroll-trigger" id="search-button" href="/products"><img src="static/purbeurreweb/assets/img/icones/Search.png" alt="Register" title="Rechercher" id="search-icon"></a>
               </form>
           </div>
       </div>
   </div>
 </header>
+
 <!-- About-->
 <section class="page-section bg-primary" id="about">
     <div class="container">
@@ -38,6 +45,7 @@
         </div>
     </div>
 </section>
+
 <!-- Contact-->
 <section class="page-section" id="contact">
   <div class="container">
@@ -50,11 +58,11 @@
       </div>
       <div class="row">
           <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-              <i class="fas fa-phone fa-3x mb-3 text-muted" title="Téléphone"></i>
+              <i class="fas fa-phone fa-3x mb-3 text-dark" title="Téléphone"></i>
               <div class="text-dark">+33 123456789</div>
           </div>
           <div class="col-lg-4 mr-auto text-center">
-              <i class="fas fa-envelope fa-3x mb-3 text-muted" title="email"></i
+              <i class="fas fa-envelope fa-3x mb-3 text-dark" title="email"></i
               ><!-- Make sure to change the email address in BOTH the anchor text and the link target below!--><a class="d-block" href="mailto:support@email.com">support@email.com</a>
           </div>
       </div>
