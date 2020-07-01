@@ -1,29 +1,21 @@
 {% extends "purbeurreweb/base.html" %}
-{% load crispy_forms_tags %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav2">
 {% endblock navbar %}
 
 {% block content %}
-<!-- Register-->
+<!-- Logout-->
 <section class="page-section bg-picture2">
     <div class="container">
         <div class="row align-items-center text-justify">
             <div class="col-lg-8 col-md-8 bg-moules-dim rounded2" id="register-form">
-                <form method="POST">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Créer un compte</legend>
-                        {{ form|crispy }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Valider</button>
-                    </div>
-                </form>
+                    <h2>Vous êtes bien déconnecté</h2>
                 <div class="border-top pt-3">
                     <small class="text-muted">
-                    Compte déjà créé ? <a class="ml-2" href={% url 'login' %}>Se connecter</a>
+                    <a class="ml-2 h7" href={% url 'login' %}>Se reconnecter ?</a>
+                    <br>
+                    <a class="ml-2 h7" href={% url 'purbeurre-home' %}>Retourner à l'accueil</a>
                     </small>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
 
         <meta charset="utf-8" />
@@ -15,7 +15,7 @@
         {% endif %}
 
         <!-- Favicon-->
-        <link rel="icon" type="image/png" href="{% static 'purbeurreweb/css/styles.css' %}">
+        <link rel="icon" type="image/png" href="{% static 'purbeurreweb/assets/img/icones/logo_pur_beurre-favicon.png' %}">
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -39,9 +39,17 @@
                 <a class="navbar-brand js-scroll-trigger" href="/"><img src="{% static 'purbeurreweb/assets/img/icones/logo_pur_beurre.png' %}" alt="Logo Pur Beurre" id="logopb-icon">Pur Beurre</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                        <li class="nav-item"><input type="text" id="search-top" placeholder="Mon Produit..." title="Rechercher" href="/products" type="submit"></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#"><img src="{% static 'purbeurreweb/assets/img/icones/Login.png' %}" alt="Login" title="Se connecter" id="login-icon"></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/register"><img src="{% static 'purbeurreweb/assets/img/icones/Register.png' %}" alt="Register" title="Créer un compte" id="register-icon"></a></li>
+                        <form method="GET" action="{% url 'purbeurre-products' %}">
+                            {% csrf_token %}
+                            <li class="nav-item"><input type="text" id="search-top" placeholder="Mon Produit..." title="Rechercher" name="q"></li>
+                        </form>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'profile' %}"><img src="{% static 'purbeurreweb/assets/img/icones/Profile.png' %}" alt="Profile" title="Mon Compte" id="profile-icon"></a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'logout' %}"><img src="{% static 'purbeurreweb/assets/img/icones/Logout.png' %}" alt="Logout" title="Se déconnecter" id="logout-icon"></a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'login' %}"><img src="{% static 'purbeurreweb/assets/img/icones/Login.png' %}" alt="Login" title="Se connecter" id="login-icon"></a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'register' %}"><img src="{% static 'purbeurreweb/assets/img/icones/Register.png' %}" alt="Register" title="Créer un compte" id="register-icon"></a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

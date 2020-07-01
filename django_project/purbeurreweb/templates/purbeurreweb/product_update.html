@@ -14,18 +14,14 @@
                 <form method="POST">
                     {% csrf_token %}
                     <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Créer un compte</legend>
+                        <legend class="border-bottom mb-4">Modifier un produit</legend>
                         {{ form|crispy }}
                     </fieldset>
                     <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Valider</button>
+                        <button class="btn btn-outline-info" type="submit">Modifier le produit</button>
                     </div>
                 </form>
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-                    Compte déjà créé ? <a class="ml-2" href={% url 'login' %}>Se connecter</a>
-                    </small>
-                </div>
+                <div class="border-top pt-3"></div>
             </div>
         </div>
     </div>

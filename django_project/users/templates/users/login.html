@@ -10,20 +10,25 @@
 <section class="page-section bg-picture2">
     <div class="container">
         <div class="row align-items-center text-justify">
-            <div class="col-lg-8 col-md-8 bg-moules-dim rounded2" id="register-form">
+            <div class="col-lg-6 col-md-6 bg-moules-dim rounded2" id="login-form">
                 <form method="POST">
                     {% csrf_token %}
                     <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Créer un compte</legend>
+                        <legend class="border-bottom mb-4">Se connecter</legend>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div id="alert-message2"><b>{{ message }}</b></div>
+                            {% endfor %}
+                        {% endif %}
                         {{ form|crispy }}
                     </fieldset>
                     <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Valider</button>
+                        <button class="btn btn-outline-info" type="submit">Login</button>
                     </div>
                 </form>
                 <div class="border-top pt-3">
                     <small class="text-muted">
-                    Compte déjà créé ? <a class="ml-2" href={% url 'login' %}>Se connecter</a>
+                    Pas encore de compte ? <a class="ml-2" href="{% url 'register' %}">Créer un compte</a>
                     </small>
                 </div>
             </div>

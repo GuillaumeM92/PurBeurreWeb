@@ -14,18 +14,15 @@
                 <form method="POST">
                     {% csrf_token %}
                     <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Créer un compte</legend>
-                        {{ form|crispy }}
+                        <legend class="border-bottom mb-4">Supprimer un produit</legend>
+                        <h3 style="font-size:125%">Etes-vous sur de vouloir supprimer le produit : "{{ product.marque }}" ?</h3>
                     </fieldset>
                     <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Valider</button>
+                        <button class="btn btn-outline-danger" type="submit">Oui, supprimer</button>
+                        <a class="btn btn-outline-light ml-2" href="{% url 'product-detail' object.id %}">Annuler</a>
                     </div>
                 </form>
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-                    Compte déjà créé ? <a class="ml-2" href={% url 'login' %}>Se connecter</a>
-                    </small>
-                </div>
+                <div class="border-top pt-3"></div>
             </div>
         </div>
     </div>
