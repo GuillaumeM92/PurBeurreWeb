@@ -13,13 +13,13 @@
               <p class="text-white-85 font-weight-light">
                   <img src="{{ object.image }}" id="product-detail-img"></a>
                   <h2 style="color:teal">{{ object.nom }}</h2>
-                  <p style="font-size:150%" class="mt-4">Marque : {{ object.marque }}</p>
-                  <p style="font-size:150%">Score nutritionnel : {{ object.note_nutritionnelle }}</p>
+                  <p style="font-size:150%" class="mt-4">Marque : {{ object.brand }}</p>
+                  <p style="font-size:150%">Score nutritionnel : {{ object.nutriscore }}</p>
                   {% for categorie in object.categories.all %}
                     <p style="font-size:150%">Catégories : {{ categorie.name }}</p>
                   {% endfor %}
                   <p class="text-white-85 font-weight-light border-top"">
-                      <a class="btn btn-primary btn-md js-scroll-trigger mt-4" href="{{ object.lien_off }}">Fiche OpenFoodFacts</a> <a class="btn btn-danger btn-md js-scroll-trigger mt-4 ml-3" href="{% url 'product-detail' object.id %}">Ajouter aux Favoris</a>
+                      <a class="btn btn-primary btn-md js-scroll-trigger mt-4" href="{{ object.off_link }}">Fiche OpenFoodFacts</a> <a class="btn btn-danger btn-md js-scroll-trigger mt-4 ml-3" href="{% url 'product-detail' object.id %}">Ajouter aux Favoris</a>
                   </p>
               </p>
           </div>
