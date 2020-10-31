@@ -15,36 +15,6 @@ class ProductListView(ListView):
     Product.objects.get_queryset()
     Product.objects.get_context_data()
 
-
-    # def get_queryset(self):
-    #     # Product.objects.get_queryset()
-    #     query = self.request.GET.get('query')
-    #     searched_product = Product.objects.filter(name__icontains=query).first()
-    #     return searched_product
-
-    # def get_context_data(self, **kwargs):
-    #     query = self.request.GET.get('query')
-    #     searched_product = Product.objects.filter(name__icontains=query).first()
-
-    #     if searched_product:
-    #         searched_product_all_categories = searched_product.categories.all()
-    #         query = Product.objects.filter(categories=searched_product_all_categories[0]).all()
-
-    #         index = 0
-    #         for category in searched_product_all_categories[1:]:
-    #             if index < 2:
-    #                 query = query.filter(categories=category).all()
-    #                 index += 1
-
-    #         sliced_query = query.order_by('nutriscore')[:24]
-
-    #         context = super().get_context_data(**kwargs)
-    #         context['products_list'] = sliced_query
-    #         return context
-
-    #     else:
-    #         return None
-
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'purbeurreweb/product_detail.html'
