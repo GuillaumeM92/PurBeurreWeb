@@ -10,30 +10,24 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.counter = 0
+        self.url = 'https://fr.openfoodfacts.org/cgi/search.pl'
+        self.params = {'action': 'process', 'page_size': 10, 'json': True, 'page': 1}
+        self.products = {}
 
-        # self.json_db1 = requests.get(self.url, self.params)
-
-        self.json_db1 = requests.get(
-            'https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=1000&json=True').json()
-        self.json_db2 = requests.get(
-            'https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=1000&page=2&json=True').json()
-        self.json_db3 = requests.get(
-            'https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=1000&page=3&json=True').json()
-        self.json_db4 = requests.get(
-            'https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=1000&page=4&json=True').json()
-        self.json_db5 = requests.get(
-            'https://fr.openfoodfacts.org/cgi/search.pl?action=process&page_size=1000&page=5&json=True').json()
-        # self.full_db = "self.json_db1['products'] + self.json_db2['products'] + self.json_db3['products'] + self.json_db4['products'] + self.json_db5['products']"
-        self.full_db = {**self.json_db1, **self.json_db2, self.json_db3, self.json_db4, self.json_db5}
+        for num in range(1, 6):
+            self.params["page_number"] = num
+            products = requests.get(self.url, self.params).json().get("product")
+            if products:
+                self.products = {**self.products, **products[0]}
 
     def inject_products(self):
 
         Product.objects.all().delete()
 
-        for product in eval(self.full_db):
+        for product in self.products:
             try:
-                obj, created = Product.objects.get_or_create(name=product['product_name_fr'], brand=product['brands'], ingredients=product['ingredients_text_fr'], allergenes=product['allergens'],
-                                                             nutriscore=product['nutrition_grades_tags'][0], shops=product['stores'], labels=product['labels'], off_link=product['url'], image=product['selected_images']['front']['display']['fr'])
+                obj, created = Product.objects.get_or_create(name=product['product_name_fr'], brand=product['brands'], ingredients=product['ingredients_text_fr'], allergens=product['allergens'],
+                                                             nutriscore=product['nutrition_grades_tags'][0], stores=product['stores'], labels=product['labels'], url=product['url'], image=product['selected_images']['front']['display']['fr'])
                 self.counter += 1
 
             except (KeyError, django.db.utils.IntegrityError) as e:
@@ -43,7 +37,7 @@ class Command(BaseCommand):
     def inject_categories(self):
         Category.objects.all().delete()
 
-        for product in eval(self.full_db):
+        for product in self.products:
             try:
                 product_categories_list = product['categories'].replace(
                     "' ", "'").replace(", ", ",").split(',')
@@ -70,7 +64,7 @@ class Command(BaseCommand):
             categories_list.append(cat)
             iterator += 1
 
-        for product in eval(self.full_db):
+        for product in self.products:
             try:
                 product_categories_list = product['categories'].replace(
                     "' ", "'").replace(", ", ",").split(',')
