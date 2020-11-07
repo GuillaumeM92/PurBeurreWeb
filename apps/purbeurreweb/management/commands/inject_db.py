@@ -11,14 +11,16 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
         self.counter = 0
         self.url = 'https://fr.openfoodfacts.org/cgi/search.pl'
-        self.params = {'action': 'process', 'page_size': 10, 'json': True, 'page': 1}
-        self.products = {}
+        self.params = {'action': 'process', 'page_size': 1000, 'json': True, 'page': 1}
+        self.products = []
 
         for num in range(1, 6):
-            self.params["page_number"] = num
-            products = requests.get(self.url, self.params).json().get("product")
+            self.params["page"] = num
+            products = requests.get(self.url, self.params).json().get("products")
+
             if products:
-                self.products = {**self.products, **products[0]}
+                for product in products:
+                    self.products.append(product)
 
     def inject_products(self):
 

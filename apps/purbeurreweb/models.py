@@ -12,13 +12,12 @@ class Favorite(models.Model):
     product_name = models.CharField(max_length=500, unique=True, default='favorites')
 
 class ProductManager(models.Manager):
-    def get_queryset(self):
-        query = self.request.GET.get('query')
-        searched_product = Product.objects.filter(nom__icontains=query).first()
+
+    def get_product(self, query):
+        searched_product = Product.objects.filter(name__icontains=query).first()
         return searched_product
 
-    def get_context_data(self, **kwargs):
-        query = self.request.GET.get('query')
+    def get_substitutes(self, query):
         searched_product = Product.objects.filter(name__icontains=query).first()
 
         if searched_product:
@@ -33,9 +32,7 @@ class ProductManager(models.Manager):
 
             sliced_query = query.order_by('nutriscore')[:24]
 
-            context = super().get_context_data(**kwargs)
-            context['products_list'] = sliced_query
-            return context
+            return sliced_query
 
         else:
             return None
