@@ -13,13 +13,12 @@ class ProductListView(ListView):
     context_object_name = 'searched_product'
 
     def get_queryset(self):
-        query = self.request.GET.get('query')
-        searched_product = Product.objects.get_product(query)
-        return searched_product
+        user_search = self.request.GET.get('query')
+        self.searched_product = Product.objects.get_product_from_(user_search)
+        return self.searched_product
 
     def get_context_data(self, **kwargs):
-        query = self.request.GET.get('query')
-        substitutes = Product.objects.get_substitutes(query)
+        substitutes = Product.objects.get_substitutes(self.searched_product)
 
         context = super().get_context_data(**kwargs)
         context['products_list'] = substitutes

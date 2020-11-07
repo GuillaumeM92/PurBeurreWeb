@@ -13,26 +13,27 @@ class Favorite(models.Model):
 
 class ProductManager(models.Manager):
 
-    def get_product(self, query):
-        searched_product = Product.objects.filter(name__icontains=query).first()
-        return searched_product
+    def get_product_from_(self, search):
+        """ return the first product matching the user search """
+        self.searched_product = Product.objects.filter(name__icontains=search).first()
+        return self.searched_product
 
-    def get_substitutes(self, query):
-        searched_product = Product.objects.filter(name__icontains=query).first()
+    def get_substitutes(self, product):
+        """ returns a list of substitutes corresponding to the searched product, and sorts them by their nutriscore. """
 
-        if searched_product:
-            searched_product_all_categories = searched_product.categories.all()
-            query = Product.objects.filter(categories=searched_product_all_categories[0]).all()
+        if product:
+            product_categories = product.categories.all()
+            corresponding_products = Product.objects.filter(categories=product_categories[0]).all()
 
             index = 0
-            for category in searched_product_all_categories[1:]:
+            for category in product_categories[1:]:
                 if index < 2:
-                    query = query.filter(categories=category).all()
+                    substitutes = corresponding_products.filter(categories=category).all()
                     index += 1
 
-            sliced_query = query.order_by('nutriscore')[:24]
+            sliced_substitutes = substitutes.order_by('nutriscore')[:24]
 
-            return sliced_query
+            return sliced_substitutes
 
         else:
             return None

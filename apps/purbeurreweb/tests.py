@@ -15,9 +15,12 @@ class ProductSubstituteTestCase(TestCase):
             product.categories.add(self.category)
 
 
-    def test_substitute(self):  # check if subtistutes are found and presented as expected
-        query = "pepsi"
-        searched_product = self.products.first()
-        found_substitute = Product.objects.get_substitutes(query)
-        self.assertEqual(searched_product.id, 1)
-        self.assertEqual(found_substitute[0].id, 3)
+    def test_substitute(self):
+        """ check if substitutes are found and presented as expected """
+        user_search = "pepsi"
+        searched_product = Product.objects.filter(name__icontains=user_search).first()
+
+        expected_substitute = Product.objects.get(name="jus de pomme")
+
+        found_substitute = Product.objects.get_substitutes(searched_product).first()
+        self.assertEqual(expected_substitute.id, found_substitute.id)
