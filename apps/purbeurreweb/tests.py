@@ -28,3 +28,6 @@ class ProductSubstituteTestCase(TestCase):
         product = product.objects.all().first()
         substitute = Product.objects.get_substitutes(product).first()
         self.assertGreater(product.nutriscore, product.nutriscore)
+
+    def test_substitute_has_similar_category(self):
+        """ ... """

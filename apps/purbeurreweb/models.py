@@ -18,25 +18,27 @@ class ProductManager(models.Manager):
     def get_substitutes(self, product):
         """ returns a list of substitutes corresponding to the searched product, and sorts them by their nutriscore. """
 
-        if product:
-            """ get all products which have the same category as the searched product's first category """
-            product_categories = product.categories.all()
-            corresponding_products = Product.objects.filter(categories=product_categories[0]).all()
-
-            for category in product_categories:
-                """ ensure the list of results is long enough """
-                if len(corresponding_products) > 100:
-                    """ filter products based off the number of matching categories """
-                    corresponding_products = corresponding_products.filter(categories=category).all()
-                else:
-                    continue
-
-            substitutes = corresponding_products.order_by('nutriscore')[:24]
-
-            return substitutes
-
-        else:
+        if not product:
             return None
+
+        """ get all products which have the same category as the searched product's first category """
+        product_categories = product.categories.all()
+        most_relevant_category = product_categories.first()
+        similar_products = Product.objects.filter(categories=most_relevant_category).all()
+
+        for category in product_categories:
+            print(len(product_categories))
+            print(len(similar_products))
+
+            minimum_required_length = 100
+            if len(similar_products) > minimum_required_length:
+                """ filter products based off the number of matching categories """
+                similar_products = similar_products.filter(categories=category).all()
+
+        max_displayed_subtitutes = 24
+        substitutes = similar_products.order_by('nutriscore')[:max_displayed_subtitutes]
+
+        return substitutes
 
 class Product(models.Model):
     name = models.CharField(max_length=500, unique=True)
