@@ -24,16 +24,13 @@ class ProductManager(models.Manager):
         """ get all products which have the same category as the searched product's first category """
         product_categories = product.categories.all()
         most_relevant_category = product_categories.first()
-        similar_products = Product.objects.filter(categories=most_relevant_category).all()
 
         for category in product_categories:
-            print(len(product_categories))
-            print(len(similar_products))
-
+            """ filter products based off the number of matching categories """
+            similar_products = Product.objects.all().filter(categories=category)
             minimum_required_length = 100
-            if len(similar_products) > minimum_required_length:
-                """ filter products based off the number of matching categories """
-                similar_products = similar_products.filter(categories=category).all()
+            if len(similar_products) < minimum_required_length:
+                break
 
         max_displayed_subtitutes = 24
         substitutes = similar_products.order_by('nutriscore')[:max_displayed_subtitutes]

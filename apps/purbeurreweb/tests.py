@@ -16,18 +16,24 @@ class ProductSubstituteTestCase(TestCase):
 
 
     def test_substitute(self):
-        """ check if substitutes are found and presented as expected """
+        """ check if a substitute is found and presented as expected """
         product = self.pepsi
         expected_substitute = self.apple_juice
 
         found_substitute = Product.objects.get_substitutes(product).first()
         self.assertEqual(expected_substitute.id, found_substitute.id)
+        print(f'Test 3 : Is {expected_substitute.id} equal to {found_substitute.id}?')
 
     def test_substitute_has_better_nutriscore(self):
-        """ ... """
-        product = product.objects.all().first()
+        """ check if substitute has a better nutriscore """
+        product = self.pepsi
         substitute = Product.objects.get_substitutes(product).first()
-        self.assertGreater(product.nutriscore, product.nutriscore)
+        self.assertGreater(product.nutriscore, substitute.nutriscore)
+        print(f'Test 3 : Is {product.nutriscore} greater than {substitute.nutriscore}?')
 
     def test_substitute_has_similar_category(self):
-        """ ... """
+        """ check if substitute has a similar category """
+        product = self.pepsi
+        substitute = Product.objects.get_substitutes(product).first()
+        self.assertEqual(product.categories.first(), substitute.categories.first())
+        print(f'Test 3 : Is {product.categories.first()} equal to {substitute.categories.first()}?')
