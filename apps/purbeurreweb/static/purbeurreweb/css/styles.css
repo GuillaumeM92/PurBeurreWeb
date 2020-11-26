@@ -214,6 +214,12 @@ body {
   font-size: 90%;
 }
 
+#favorite-button {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
 #search-button {
   padding: 1.4%;
   width: 9%;

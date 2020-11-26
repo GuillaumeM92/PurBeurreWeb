@@ -28,9 +28,11 @@
                           <a href="{% url 'product-detail' searched_product.id %}" style="font-size: 150%;"><b>{{ searched_product.name }}</b></a>
                       </div>
                       {% csrf_token %}
-                      <div name="favorite-product">
-                          <a href="{% url 'product-detail' searched_product.id %}"><img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}" title="Ajouter aux favoris" id="favorite-img"></a>
-                      </div>
+                      <form id="favorite-product-id" method="POST">
+                          {% csrf_token %}
+                          <button id="favorite-button" name="favorite" value="{{ searched_product.id }}">
+                          <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}" title="Ajouter aux favoris" id="favorite-img" name="fav"></a>
+                      </form>
               </div>
                   <div>
                       {% else %}
@@ -65,9 +67,11 @@
                         <a href="{% url 'product-detail' product.id %}" style="font-size: 135%; color:#343a40"><b>{{ product.name }}</b></a>
                     {% csrf_token %}
                     </div>
-                    <div method="GET" name="fav">
-                        <a method="GET" name="fav" href="{% url 'favorites' %}"><img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}" title="Ajouter aux favoris" id="favorite-img" name="fav"></a>
-                    </div>
+                    <form id="favorite-product-id" method="POST">
+                        {% csrf_token %}
+                        <button id="favorite-button" name="favorite" value="{{ product.id }}">
+                        <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}" title="Ajouter aux favoris" id="favorite-img"></a>
+                    </form>
                 </div>
             {% endfor %}
         </div>

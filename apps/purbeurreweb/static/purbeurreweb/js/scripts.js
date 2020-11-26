@@ -3,6 +3,39 @@
     * Copyright 2013-2020 Start Bootstrap
     * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-creative/blob/master/LICENSE)
     */
+
+$("#favorite-button").on("click", function(e) {
+    e.preventDefault();
+    let userInputValue = document.getElementById("user_input").value;
+}
+    if (user_input_value != "") {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "/question_handler",
+            traditional: "true",
+            data: JSON.stringify({user_input_value}),
+            dataType: "json"
+            }).done(
+                function(data) {
+                    if (data == "ZERO_RESULTS") {
+                        chat.appendChild(newGrandpyText).innerHTML = getRandomText(no_result);
+                    } else if (data == "ignore") {
+                        chat.appendChild(newGrandpyText).innerHTML = ":)";
+                    } else if (data == "error") {
+                        chat.appendChild(newGrandpyText).innerHTML = "Une erreur innatendue est survenue. Merci de réessayer ultérieurement.";
+                    } else {
+                    chat.appendChild(newGrandpyText).innerHTML = (getRandomText(answer1) + "<br>" + getRandomText(answer2) + data[0] + "<br>" + "<br>" + getRandomText(anecdote) + data[2]);
+                    myLatLng = data[1];
+                    initMap();
+                }
+            }).fail(
+                function (jqXHR, textStatus) {
+                    chat.appendChild(newGrandpyText).innerHTML = "Oups il y a eu une erreur, vérifie ta connexion internet et réessaye.";
+            }).then(
+                function() {
+                    updateScroll();
+            });
     (function($) {
   "use strict"; // Start of use strict
 
