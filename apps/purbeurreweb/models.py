@@ -59,7 +59,9 @@ class Product(models.Model):
     objects = ProductManager()
 
     def __str__(self):
+        """Return the name."""
         return self.name
 
     def get_absolute_url(self):
+        """Return the url and prodcut PK."""
         return reverse("product-detail", kwargs={"pk": self.pk})

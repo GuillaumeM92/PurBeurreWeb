@@ -1,80 +1,91 @@
 {% extends "purbeurreweb/base.html" %}
 {% load static %}
 {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav3">
-{% endblock navbar %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav3">
+    {% endblock navbar %}
 
-{% block content %}
-<div class="masthead5" name="background-image">
-    <div class="container mt-5 mb-4">
-          <div class="col-12 rounded2 text-center bg-moules-dim">
-              <div name="product-box" class="col-12-custom">
-                  <div name="product-image">
-                    {% if searched_product %}
-                      <a href="{% url 'product-detail' searched_product.id %}"><img src="{{ searched_product.image }}" id="product-img"></a>
-                      {% if searched_product.nutriscore == 'a' %}
-                          <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\A.png' %}" id="nutriscore-img"></a>
-                      {% elif searched_product.nutriscore == 'b' %}
-                          <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\B.png' %}" id="nutriscore-img"></a>
-                      {% elif searched_product.nutriscore == 'c' %}
-                          <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\C.png' %}" id="nutriscore-img"></a>
-                      {% elif searched_product.nutriscore == 'd' %}
-                          <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\D.png' %}" id="nutriscore-img"></a>
-                      {% else %}
-                          <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\E.png' %}" id="nutriscore-img"></a>
-                      {% endif %}
-                      </div>
-                      <div name="product-name">
-                          <a href="{% url 'product-detail' searched_product.id %}" style="font-size: 150%;"><b>{{ searched_product.name }}</b></a>
-                      </div>
-                      {% csrf_token %}
-                      <form id="favorite-product-id" method="POST">
-                          {% csrf_token %}
-                          <button id="favorite-button" name="favorite" value="{{ searched_product.id }}">
-                          <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}" title="Ajouter aux favoris" id="favorite-img" name="fav"></a>
-                      </form>
-              </div>
-                  <div>
-                      {% else %}
-                      <br>
-                      <h3>Désolé, nous n'avons trouvé aucun résultat correspondant.</h3>
-                      <br>
-                      <a class="ml-2 h7" href={% url 'purbeurre-home' %} style="font-size: 140%;"> Retourner à l'accueil</a>
-                      <br>
-                      {% endif %}
-                  </div>
-          </div>
-    </div>
-    <div class="container mt-5 mb-4">
-        <div class="row col-12 bg-white rounded2 text-center">
-            {% for product in products_list %}
-                <div name="product-box" class="col-4-custom mb-5">
+    {% block content %}
+    <div class="masthead5" name="background-image">
+        <div class="container mt-5 mb-4">
+            <div class="col-12 rounded2 text-center bg-moules-dim">
+                <div name="product-box" class="col-12-custom">
                     <div name="product-image">
-                        <a href="{% url 'product-detail' product.id %}"><img src="{{ product.image }}" id="product-img"></a>
-                        {% if product.nutriscore == 'a' %}
-                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\A.png' %}" id="nutriscore-img"></a>
-                        {% elif product.nutriscore == 'b' %}
-                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\B.png' %}" id="nutriscore-img"></a>
-                        {% elif product.nutriscore == 'c' %}
-                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\C.png' %}" id="nutriscore-img"></a>
-                        {% elif product.nutriscore == 'd' %}
-                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\D.png' %}" id="nutriscore-img"></a>
+                        {% if searched_product %}
+                        <a href="{% url 'product-detail' searched_product.id %}"><img src="{{ searched_product.image }}"
+                                id="product-img"></a>
+                        {% if searched_product.nutriscore == 'a' %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\A.png' %}"
+                            id="nutriscore-img"></a>
+                        {% elif searched_product.nutriscore == 'b' %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\B.png' %}"
+                            id="nutriscore-img"></a>
+                        {% elif searched_product.nutriscore == 'c' %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\C.png' %}"
+                            id="nutriscore-img"></a>
+                        {% elif searched_product.nutriscore == 'd' %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\D.png' %}"
+                            id="nutriscore-img"></a>
                         {% else %}
-                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\E.png' %}" id="nutriscore-img"></a>
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\E.png' %}"
+                            id="nutriscore-img"></a>
                         {% endif %}
                     </div>
                     <div name="product-name">
-                        <a href="{% url 'product-detail' product.id %}" style="font-size: 135%; color:#343a40"><b>{{ product.name }}</b></a>
-                    {% csrf_token %}
+                        <a href="{% url 'product-detail' searched_product.id %}"
+                            style="font-size: 150%;"><b>{{ searched_product.name }}</b></a>
                     </div>
-                    <form id="favorite-product-id" method="POST">
+                    {% csrf_token %}
+                </div>
+                <div>
+                    {% else %}
+                    <br>
+                    <h3>Désolé, nous n'avons trouvé aucun résultat correspondant.</h3>
+                    <br>
+                    <a class="ml-2 h7" href={% url 'purbeurre-home' %} style="font-size: 140%;"> Retourner à
+                        l'accueil</a>
+                    <br>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5 mb-4">
+            <div class="row col-12 bg-white rounded2 text-center">
+                {% for product in products_list %}
+                <div name="product-box" class="col-4-custom mb-5">
+                    <div name="product-image">
+                        <a href="{% url 'product-detail' product.id %}"><img src="{{ product.image }}"
+                                id="product-img"></a>
+                        {% if product.nutriscore == 'a' %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\A.png' %}"
+                            id="nutriscore-img"></a>
+                        {% elif product.nutriscore == 'b' %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\B.png' %}"
+                            id="nutriscore-img"></a>
+                        {% elif product.nutriscore == 'c' %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\C.png' %}"
+                            id="nutriscore-img"></a>
+                        {% elif product.nutriscore == 'd' %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\D.png' %}"
+                            id="nutriscore-img"></a>
+                        {% else %}
+                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\E.png' %}"
+                            id="nutriscore-img"></a>
+                        {% endif %}
+                    </div>
+                    <div name="product-name">
+                        <a href="{% url 'product-detail' product.id %}"
+                            style="font-size: 135%; color:#343a40"><b>{{ product.name }}</b></a>
                         {% csrf_token %}
-                        <button id="favorite-button" name="favorite" value="{{ product.id }}">
-                        <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}" title="Ajouter aux favoris" id="favorite-img"></a>
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button class="favorite-button" name="favorite" value="{{ product.id }}">
+                            <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}"
+                                title="Ajouter aux favoris" id="favorite-img"></a>
                     </form>
                 </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
-{% endblock content %}
+    {% endblock content %}
