@@ -63,5 +63,5 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        """Return the url and prodcut PK."""
+        """Return the url and product PK."""
         return reverse("product-detail", kwargs={"pk": self.pk})

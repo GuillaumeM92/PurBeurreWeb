@@ -5,7 +5,7 @@ from .models import Product
 
 
 def home(request):
-    """Return the home page."""
+    """Return he home page."""
     return render(request, "purbeurreweb/home.html")
 
 

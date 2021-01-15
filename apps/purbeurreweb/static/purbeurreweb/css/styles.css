@@ -214,10 +214,14 @@ body {
   font-size: 90%;
 }
 
-#favorite-button {
+.favorite-button {
   padding: 0;
   border: none;
   background: none;
+  color:var(--danger);
+  font-size: 18px;
+  font-weight: bold;
+  margin: 5px;
 }
 
 #search-button {
@@ -269,7 +273,7 @@ body {
 
 #colette-img {
   max-width: 75%;
-  height: : auto;
+  height: auto;
 }
 
 #remy-img {
@@ -404,9 +408,9 @@ body {
 }
 
 #favorite-img {
-  margin-top: 8px;
   width: 35px;
   height: 35px;
+  margin: 5px;
 }
 
 #product-detail-img {
@@ -6581,7 +6585,7 @@ button.bg-light:focus {
 }
 
 .bg-dark-dim {
-  background-color: rgba(52, 58, 54, 0.88); !important;
+  background-color: rgba(52, 58, 54, 0.88);
 }
 
 .bg-moules {
@@ -6589,7 +6593,7 @@ button.bg-light:focus {
 }
 
 .bg-moules-dim {
-  background-color: rgba(57, 62, 73, 0.88); !important;
+  background-color: rgba(57, 62, 73, 0.88);
 }
 
 .bg-caramel {

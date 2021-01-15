@@ -28,14 +28,16 @@ class ProductSubstituteTestCase(TestCase):
 
         found_substitute = Product.objects.get_substitutes(product).first()
         self.assertEqual(expected_substitute.id, found_substitute.id)
-        print(f"Test 3 : Is {expected_substitute.id} equal to {found_substitute.id}?")
+        print(f"Test 1 : Is {expected_substitute.id} equal to {found_substitute.id} ?")
 
     def test_substitute_has_better_nutriscore(self):
         """Check if substitute has a better nutriscore."""
         product = self.pepsi
         substitute = Product.objects.get_substitutes(product).first()
         self.assertGreater(product.nutriscore, substitute.nutriscore)
-        print(f"Test 3 : Is {product.nutriscore} greater than {substitute.nutriscore}?")
+        print(
+            f"Test 2 : Is {product.nutriscore} greater than {substitute.nutriscore} ?"
+        )
 
     def test_substitute_has_similar_category(self):
         """Check if substitute has a similar category."""
@@ -43,6 +45,5 @@ class ProductSubstituteTestCase(TestCase):
         substitute = Product.objects.get_substitutes(product).first()
         self.assertEqual(product.categories.first(), substitute.categories.first())
         print(
-            f"Test 3 : Is {product.categories.first()}"
-            " equal to {substitute.categories.first()}?"
+            f"Test 3 : Is {product.categories.first()} equal to {substitute.categories.first()} ?"
         )

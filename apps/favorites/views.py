@@ -1,16 +1,21 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.views.generic import ListView
-from apps.purbeurreweb.models import Product
 from .models import Favorite
+from django.http import JsonResponse
 
 
 class FavoritesListView(ListView):
-    model = Product
+    model = Favorite
     template_name = "favorites/favorite_products.html"
     context_object_name = "favorites"
     ordering = ["name"]
 
-    # def get_favorite(self):
-    #     user_favorite = self.request.GET.get('favorite')
-    #     print('qsdsqdqsdqsdSQDQSDQSDSQDSQDqsdqsdqsdq')
-    #     print(user_fav)
+
+def favorite(request):
+    if request.method == "GET" and request.is_ajax():
+        response = request.GET
+        print(response)
+        print(response["user"])
+        return JsonResponse("good", status=200, safe=False)
+    else:
+        return JsonResponse("oops", status=400, safe=False)

@@ -25,8 +25,8 @@
                     {% endif %}
                 </div>
                 <div name="product-name">
-                    <a href="{% url 'product-detail' product.id %}"
-                        style="font-size: 135%; color:#343a40"><b>{{ product.nom }}</b></a>
+                    <a href="{% url 'product-detail' product.id %}" style="font-size: 135%; color:#343a40">
+                        <b>{{ product.nom }}</b></a>
                     {% csrf_token %}
                 </div>
                 <div name="favorite-product">

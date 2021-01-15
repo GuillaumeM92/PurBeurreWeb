@@ -30,9 +30,9 @@
                             id="nutriscore-img"></a>
                         {% endif %}
                     </div>
-                    <div name="product-name">
-                        <a href="{% url 'product-detail' searched_product.id %}"
-                            style="font-size: 150%;"><b>{{ searched_product.name }}</b></a>
+                    <div name="product-name" id="searched-product" productID="{{ searched_product.id }}">
+                        <a href="{% url 'product-detail' searched_product.id %}" style="font-size: 150%;">
+                            <b>{{ searched_product.name }}</b></a>
                     </div>
                     {% csrf_token %}
                 </div>
@@ -73,16 +73,22 @@
                         {% endif %}
                     </div>
                     <div name="product-name">
-                        <a href="{% url 'product-detail' product.id %}"
-                            style="font-size: 135%; color:#343a40"><b>{{ product.name }}</b></a>
+                        <a href="{% url 'product-detail' product.id %}" style="font-size: 135%; color:#343a40">
+                            <b>{{ product.name }}</b></a>
                         {% csrf_token %}
                     </div>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <button class="favorite-button" name="favorite" value="{{ product.id }}">
-                            <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}"
-                                title="Ajouter aux favoris" id="favorite-img"></a>
-                    </form>
+
+                    <!-- {% if user.is_authenticated %} -->
+                    <!-- {% endif %} -->
+
+
+                    {% csrf_token %}
+                    <button class="favorite-button" name="favorite" value="{{ product.id }}"
+                        isAuthenticated="{{ user.is_authenticated }}" user="{{ user }}">
+                        <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}"
+                            title="Ajouter aux favoris" id="favorite-img">
+                    </button>
+
                 </div>
                 {% endfor %}
             </div>

@@ -4,16 +4,6 @@ from apps.purbeurreweb.models import Product
 from apps.users.models import Profile
 
 
-class FavoriteManager(models.Manager):
-    """Favorite manager."""
-
-    # def get_product_from_(self, search):
-    #     """ return the first product matching the user search """
-    #     self.searched_product = Product.objects.filter(name__icontains=search).first()
-    #     return self.searched_product
-    pass
-
-
 class Favorite(models.Model):
     """Favorite model."""
 
@@ -24,4 +14,6 @@ class Favorite(models.Model):
     substitute = models.ForeignKey(
         Product, on_delete=models.PROTECT, related_name="favorites"
     )
-    objects = FavoriteManager()
+
+    def __str__(self):
+        return self.name
