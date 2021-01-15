@@ -34,7 +34,6 @@
                         <a href="{% url 'product-detail' searched_product.id %}" style="font-size: 150%;">
                             <b>{{ searched_product.name }}</b></a>
                     </div>
-                    {% csrf_token %}
                 </div>
                 <div>
                     {% else %}
@@ -75,12 +74,7 @@
                     <div name="product-name">
                         <a href="{% url 'product-detail' product.id %}" style="font-size: 135%; color:#343a40">
                             <b>{{ product.name }}</b></a>
-                        {% csrf_token %}
                     </div>
-
-                    <!-- {% if user.is_authenticated %} -->
-                    <!-- {% endif %} -->
-
 
                     {% csrf_token %}
                     <button class="favorite-button" name="favorite" value="{{ product.id }}"

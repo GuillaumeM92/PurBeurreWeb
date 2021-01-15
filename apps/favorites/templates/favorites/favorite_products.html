@@ -5,38 +5,64 @@
     {% endblock navbar %}
 
     {% block content %}
-    </div>
-    <div class="container mt-5 mb-4">
+    <div class="container mt-10 mb-4">
         <div class="row col-12 bg-white rounded2 text-center">
-            {% for product in products_list %}
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            {% for favorite in favorites %}
+            {% if favorite.email.email == user.email %}
             <div name="product-box" class="col-4-custom mb-5">
                 <div name="product-image">
-                    <a href="{% url 'product-detail' product.id %}"><img src="{{ product.image }}" id="product-img"></a>
-                    {% if product.note_nutritionnelle == 'a' %}
+                    <a href="{% url 'product-detail' favorite.substitute.id %}"><img
+                            src="{{ favorite.substitute.image }}" id="product-img"></a>
+                    {% if favorite.substitute.nutriscore == 'a' %}
                     <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\A.png' %}" id="nutriscore-img"></a>
-                    {% elif product.note_nutritionnelle == 'b' %}
+                    {% elif favorite.substitute.nutriscore == 'b' %}
                     <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\B.png' %}" id="nutriscore-img"></a>
-                    {% elif product.note_nutritionnelle == 'c' %}
+                    {% elif favorite.substitute.nutriscore == 'c' %}
                     <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\C.png' %}" id="nutriscore-img"></a>
-                    {% elif product.note_nutritionnelle == 'd' %}
+                    {% elif favorite.substitute.nutriscore == 'd' %}
                     <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\D.png' %}" id="nutriscore-img"></a>
                     {% else %}
                     <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\E.png' %}" id="nutriscore-img"></a>
                     {% endif %}
                 </div>
                 <div name="product-name">
-                    <a href="{% url 'product-detail' product.id %}" style="font-size: 135%; color:#343a40">
-                        <b>{{ product.nom }}</b></a>
-                    {% csrf_token %}
+                    <a href="{% url 'product-detail' favorite.substitute.id %}" style="font-size: 135%; color:#343a40">
+                        <b>{{ favorite.substitute.name }}</b></a>
                 </div>
-                <div name="favorite-product">
-                    <a href="{% url 'favorites' %}"><img
-                            src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}"
-                            title="Ajouter aux favoris" id="favorite-img"></a>
-                </div>
+
+                {% csrf_token %}
+                <button class="remove-favorite-button" name="favorite" value="{{ favorite.substitute.id }}"
+                    isAuthenticated="{{ user.is_authenticated }}" user="{{ user }}">
+                    <img src="{% static 'purbeurreweb\assets\img\icones\favorite2full.png' %}"
+                        title="Ajouter aux favoris" id="favorite-img">
+                </button>
+
             </div>
+            {% elif not favorite.email.email == user.email%}
+            <div class="col-12 rounded2 text-center bg-moules-dim">
+                <br>
+                <h3>Vous n'avez pas encore ajouté de favoris.</h3>
+                <br>
+                <a class="ml-2 h7" href={% url 'purbeurre-home' %} style="font-size: 140%;"> Retourner à
+                    l'accueil</a>
+                <br>
+            </div>
+            {% endif %}
+
             {% endfor %}
+            {% else %}
+            <div class="col-12 rounded2 text-center bg-moules-dim">
+                <br>
+                <h3>Veuillez vous connecter pour accéder aux favoris.</h3>
+                <br>
+                <a class="ml-2 h7" href={% url 'purbeurre-home' %} style="font-size: 140%;"> Retourner à
+                    l'accueil</a>
+                <br>
+            </div>
+            {% endif %}
+
         </div>
-    </div>
     </div>
     {% endblock content %}

@@ -1,35 +1,60 @@
-// jquery ajax call for the favorites
+// jquery ajax call to add a product to the user favorites
 $(".favorite-button").on("click", function (e) {
   e.preventDefault();
 
   let searched_product_id = document.getElementById("searched-product").getAttribute('productID');
   let substitute_id = this.value;
   let is_authenticated = this.getAttribute("isAuthenticated");
-  let user = this.getAttribute("user");
-  let favorite_image = document.getElementById("favorite-img").src
+  let email = this.getAttribute("user");
 
   if (is_authenticated == "True") {
 
     $.ajax({
-      data: { searched_product_id, substitute_id, user }, // get the form data
+      data: { searched_product_id, substitute_id, email },
       type: $(this).attr('method'), // GET or POST
-      url: "{% url 'contact_form' %}",
-      // on success
+      url: "/favorite",
       success: function (response) {
-        alert("good");
       },
-      // on error
       error: function (response) {
-        // alert the error if any error occured
-        alert("oops");
-        console.log("oops")
+        alert("an error occured");
       }
     });
     this.innerHTML = "<span style='color:teal; margin:5px'> Produit ajouté aux favoris ! </span>";
   }
+
   else {
     console.log("user is not authenticated")
     this.innerHTML = "<span> Vous devez être connecté pour ajouter un produit aux favoris ! </span>";
+  }
+});
+
+
+// jquery ajax call to remove a product from the user favorites
+$(".remove-favorite-button").on("click", function (e) {
+  e.preventDefault();
+
+  let substitute_id = this.value;
+  let is_authenticated = this.getAttribute("isAuthenticated");
+  let email = this.getAttribute("user");
+
+  if (is_authenticated == "True") {
+
+    $.ajax({
+      data: { substitute_id, email },
+      type: $(this).attr('method'), // GET or POST
+      url: "/rem_favorite",
+      success: function (response) {
+      },
+      error: function (response) {
+        alert("an error occured");
+      }
+    });
+    this.innerHTML = "<span style='color:teal; margin:5px'> Produit retiré des favoris ! </span>";
+  }
+
+  else {
+    console.log("user is not authenticated")
+    this.innerHTML = "<span> Vous devez être connecté pour retirer un produit des favoris ! </span>";
   }
 });
 

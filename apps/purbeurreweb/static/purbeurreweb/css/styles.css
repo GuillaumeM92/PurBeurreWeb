@@ -75,6 +75,12 @@ body {
   background-color: #fff;
 }
 
+footer {
+  position: absolute;
+  /* bottom: 0; */
+  width: 100%;
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
@@ -133,6 +139,13 @@ body {
   margin-right: 10px;
 }
 
+#favorite-icon {
+  height: 40px;
+  width: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 #register-icon {
   height: 37px;
   width: 37px;
@@ -164,11 +177,6 @@ body {
   #register-icon {
     margin-left: 10px;
   }
-}
-
-#carotte-icon {
-  max-width: 22%;
-  max-height: 22%;
 }
 
 #search-top {
@@ -8190,6 +8198,11 @@ button.bg-dark:focus {
 .mt-5,
 .my-5 {
   margin-top: 3rem !important;
+}
+
+.mt-10,
+.my-10 {
+  margin-top: 7rem !important;
 }
 
 .mr-5,

@@ -5,7 +5,7 @@ from .models import Product
 
 
 def home(request):
-    """Return he home page."""
+    """Return the home page."""
     return render(request, "purbeurreweb/home.html")
 
 
@@ -29,11 +29,6 @@ class ProductListView(ListView):
         context = super().get_context_data(**kwargs)
         context["products_list"] = substitutes
         return context
-
-    def get_product_id(self):
-        """Return the product ID."""
-        favorite_product = self.request.GET.get("favorite")
-        return favorite_product
 
 
 class ProductDetailView(DetailView):
