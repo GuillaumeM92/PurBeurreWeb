@@ -40,7 +40,10 @@
                 </button>
 
             </div>
-            {% elif not favorite.email.email == user.email%}
+            {% endif %}
+            {% endfor %}
+
+            {% if not user.has_favorite %}
             <div class="col-12 rounded2 text-center bg-moules-dim">
                 <br>
                 <h3>Vous n'avez pas encore ajouté de favoris.</h3>
@@ -51,7 +54,6 @@
             </div>
             {% endif %}
 
-            {% endfor %}
             {% else %}
             <div class="col-12 rounded2 text-center bg-moules-dim">
                 <br>

@@ -43,6 +43,17 @@ def add_favorite(response):
         print(e)
         pass
 
+    try:
+        user = MyUser.objects.get(
+            email=MyUser.objects.filter(email=response["email"]).first()
+        )
+        if user.has_favorite is False:
+            user.has_favorite = True
+            user.save()
+    except () as e:
+        print(e)
+        pass
+
 
 def remove_favorite(response):
     try:
@@ -51,6 +62,18 @@ def remove_favorite(response):
             substitute=Product.objects.filter(id=response["substitute_id"]).first(),
         )
         fav.delete()
+    except () as e:
+        print(e)
+        pass
+
+    try:
+        user = MyUser.objects.get(email=MyUser.objects.get(email=response["email"]))
+        user_favorites = Favorite.objects.filter(email=user.id)
+
+        if len(user_favorites) >= 1:
+            if user.has_favorite is True:
+                user.has_favorite = False
+                user.save()
     except () as e:
         print(e)
         pass
