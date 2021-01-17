@@ -1,1 +1,1 @@
-web: gunicorn config.wsgi --preload
+web: python manage.py collectstatic gunicorn config.wsgi --preload
