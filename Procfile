@@ -1,1 +1,1 @@
-web: gunicorn --chdir /root/ config.wsgi --preload
+web: gunicorn config.wsgi --preload
