@@ -20,9 +20,8 @@
                     consommez tous les jours</p>
                 <form method="GET" action="{% url 'purbeurre-products' %}">
                     {% csrf_token %}
-                    <input type="text" id="search-middle" placeholder="Mon Produit..." title="Rechercher" name="query">
-                    <input type="submit" id="search-icon" alt="search" title="Rechercher"
-                        class="btn btn-primary btn-md js-scroll-trigger" value="Rechercher">
+                    <input type="text" id="search-middle" placeholder="Mon Produit..." name="user_query">
+                    <input type="submit" id="search-icon" alt="search" class="btn btn-primary btn-md js-scroll-trigger">
                 </form>
             </div>
         </div>

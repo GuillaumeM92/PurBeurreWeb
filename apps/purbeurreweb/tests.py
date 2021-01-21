@@ -1,6 +1,7 @@
 """Purbeurreweb tests."""
 from django.test import TestCase
 from .models import Product, Category
+import time
 
 
 class ProductSubstituteTestCase(TestCase):
@@ -54,3 +55,121 @@ class ProductSubstituteTestCase(TestCase):
 # all_products
 # first_product = all_products.first()
 # first_product
+
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.common import exceptions
+
+from apps.users.models import MyUser
+from apps.favorites.models import Favorite
+
+driver = WebDriver(
+    executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume/apps/purbeurreweb/chromedriver_win32/chromedriver.exe"
+)
+
+
+class UserStorySeleniumTest(StaticLiveServerTestCase):
+    def setUp(self):
+        """Create and populate a testing database."""
+        Category.objects.create(name="boisson")
+        self.pepsi = Product.objects.create(id=1, name="pepsi", nutriscore="E")
+        self.fanta = Product.objects.create(id=2, name="fanta", nutriscore="C")
+        self.apple_juice = Product.objects.create(
+            id=3, name="jus de pomme", nutriscore="B"
+        )
+
+        self.products = Product.objects.all()
+        self.category = Category.objects.first()
+
+        for product in self.products:
+            product.categories.add(self.category)
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.selenium = driver
+        cls.selenium.implicitly_wait(10)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def register(self):
+        self.selenium.get("%s%s" % (self.live_server_url, "/register/"))
+        username_input = self.selenium.find_element_by_name("email")
+        username_input.send_keys("test@email.com")
+        password_input = self.selenium.find_element_by_name("password1")
+        password_input.send_keys("testing1234")
+        password_input = self.selenium.find_element_by_name("password2")
+        password_input.send_keys("testing1234")
+        self.selenium.find_element_by_xpath('//button[@value="Register"]').click()
+        self.assertEqual(
+            "test@email.com", MyUser.objects.get(email="test@email.com").email
+        )
+        # breakpoint()
+
+    def login(self):
+        self.selenium.get("%s%s" % (self.live_server_url, "/login/"))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys("test@email.com")
+        password_input = self.selenium.find_element_by_name("password")
+        password_input.send_keys("testing1234")
+        self.selenium.find_element_by_xpath('//button[@value="Log in"]').click()
+        self.assertTrue(MyUser.objects.get(email="test@email.com").is_authenticated)
+        # breakpoint()
+
+    def search_product(self):
+        self.selenium.get("%s%s" % (self.live_server_url, "/"))
+        search = self.selenium.find_element_by_id("search-middle")
+        search.send_keys("pepsi")
+        self.selenium.find_element_by_xpath('//input[@id="search-icon"]').click()
+        # breakpoint()
+
+    def add_favorite(self):
+        self.selenium.get(
+            "%s%s"
+            % (
+                self.live_server_url,
+                "/products/?csrfmiddlewaretoken=rw0BQsfaLyiBL9OX1qeHYiSiaJwm74ISl02W9nNSLOXnd4b4StpRjI2hesjGy7vo&user_query=pepsi",
+            )
+        )
+        self.selenium.find_element_by_name("add-favorite").click()
+        time.sleep(1)
+        self.assertEqual("pepsi", Favorite.objects.first().base_product.name)
+        # breakpoint()
+
+    def remove_favorite(self):
+        self.selenium.get("%s%s" % (self.live_server_url, "/favorites/"))
+        self.selenium.find_element_by_name("remove-favorite").click()
+        self.assertRaises(Favorite.DoesNotExist)
+        # breakpoint()
+
+    def logout(self):
+        self.selenium.get("%s%s" % (self.live_server_url, "/"))
+        try:
+            self.selenium.find_element_by_id("navbar-button").click()
+            self.selenium.find_element_by_id("logout-icon").click()
+        except exceptions.ElementNotInteractableException:
+            self.selenium.find_element_by_id("logout-icon").click()
+            self.assertFalse(
+                MyUser.objects.get(email="test@email.com").is_authenticated
+            )
+        # breakpoint()
+
+    def test_all(self):
+        self.register()
+        self.login()
+        self.search_product()
+        self.add_favorite()
+        self.remove_favorite()
+        self.logout()
+
+
+#  python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_register
+#  python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_login
+#  python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_search_product
+#  python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_add_favorite
+# python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_remove_favorite
+# python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_logout
+# python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_all

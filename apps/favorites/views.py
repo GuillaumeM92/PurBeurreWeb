@@ -16,7 +16,6 @@ def favorite(request):
     if request.method == "GET" and request.is_ajax():
         response = request.GET
         add_or_remove_favorite(response)
-        print(response)
         return JsonResponse("success", status=200, safe=False)
     else:
         return JsonResponse("error", status=400, safe=False)

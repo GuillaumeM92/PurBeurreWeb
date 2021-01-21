@@ -19,7 +19,7 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         """Return the user search query."""
-        user_search = self.request.GET.get("query")
+        user_search = self.request.GET.get("user_query")
         self.searched_product = Product.objects.get_product_from_(user_search)
         return self.searched_product
 

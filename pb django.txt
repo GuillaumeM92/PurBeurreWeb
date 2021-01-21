@@ -1,0 +1,39 @@
+1/ Dans le call ajax, j'ai essayé d'utiliser
+url: "{% url 'contact_form' %}",
+mais impossible :
+GET http://localhost:8000/products/%7B%%20url%20'favorite'%20%%7D?searched_product_id=226&substitute_id=1688&user=gemacx%40gmail.com 404 (Not Found)
+par contre url: "/favorite",
+fonctionne bien, pourtant le tuto ici https://djangocentral.com/django-ajax-with-jquery/
+indique d'utiliser la 1ere méthode. Alors pourquoi ?
+
+2/ J'ai créé un modèle utilisateur personnalisé pour avoir l'email en tant que login.
+Ca fonctionne bien, MAIS quand je créé un utilisateur le profil ne se créé/associe plus correctement comme avant.
+C'est surement à cause des signals qui n'arrivent plus à lire le modèle User de base ?
+J'ai suivi la doc ici mais sans succès. Pourquoi ?
+https://docs.djangoproject.com/fr/3.0/topics/auth/customizing/#referencing-the-user-model
+
+3/ Comportement du footer sur la page /favorites...
+Comment le faire rester en bas ?
+bottom : 0; fonctionne mais pose pb sur la page d'accueil
+
+4/ Mon dossier static avec js et css concerne tout le site mais est situé dans le dossier d'une seule
+application (purbeurreweb), faut il que je déplace ce dossier static ?
+
+5/ Sur Heroku, le dossier statique semble ne pas être lu, pourquoi ? Et comment donner l'accès a la BDD ?
+
+6/ Dans la requête AJAX, faut-il mettre qqe chose après success / error ? Quoi ?
+
+7/ Favoris: comment faire pour afficher le coeur différent selon les favoris utilisateurs ?
+
+8/ Tests à vérifier
+
+9/ Logique de certaines vues à passer vers des Managers
+
+10/ Relire Guide Mentor sur Discord
+
+11/ Dans VSC, comment automatiser le lancement du serveur django dans le terminal ?
+
+12/ Définir les variables locales (identifiants, secret_key..)
+
+13/ Améliorer le formatage des produits dans la base de données au moment de l'importation. Par exemple il y a trop de
+produits avec les catégories en anglais.

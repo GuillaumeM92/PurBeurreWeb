@@ -34,7 +34,6 @@
 </head>
 
 <body id="page-top">
-
     <!-- Navigation-->
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
@@ -43,14 +42,15 @@
             <a class="navbar-brand js-scroll-trigger" href="/"><img
                     src="{% static 'purbeurreweb/assets/img/icones/logo_pur_beurre.png' %}" alt="Logo Pur Beurre"
                     id="logopb-icon">Pur Beurre</a><button class="navbar-toggler navbar-toggler-right" type="button"
-                data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                data-toggle="collapse" id="navbar-button" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                    class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
                     <form method="GET" action="{% url 'purbeurre-products' %}">
                         {% csrf_token %}
                         <li class="nav-item"><input type="text" id="search-top" placeholder="Mon Produit..."
-                                title="Rechercher" name="query"></li>
+                                title="Rechercher" name="user_query"></li>
                     </form>
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'profile' %}"><img
