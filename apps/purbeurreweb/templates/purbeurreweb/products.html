@@ -1,5 +1,6 @@
 {% extends "purbeurreweb/base.html" %}
 {% load static %}
+{% load myfilters %}
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav3">
     {% endblock navbar %}
@@ -8,6 +9,11 @@
     <div class="masthead5" name="background-image">
         <div class="container mt-5 mb-4">
             <div class="col-12 rounded2 text-center bg-moules-dim">
+                <div class="mt-neg mb-neg">
+                    <br>
+                    <h3>Produit recherché :</h3>
+                    <br>
+                </div>
                 <div name="product-box" class="col-12-custom">
                     <div name="product-image">
                         {% if searched_product %}
@@ -47,7 +53,9 @@
                 </div>
             </div>
         </div>
-        <div class="container mt-5 mb-4">
+        {% if products_list %}
+        <div class="container mt-4-5">
+            <h3 class="text-dark mb-4-5 ml-10">Suggestions de remplacement :</h3>
             <div class="row col-12 bg-white rounded2 text-center">
                 {% for product in products_list %}
                 <div name="product-box" class="col-4-custom mb-5">
@@ -75,17 +83,26 @@
                         <a href="{% url 'product-detail' product.id %}" style="font-size: 135%; color:#343a40">
                             <b>{{ product.name }}</b></a>
                     </div>
-
                     {% csrf_token %}
-                    <button class="favorite-button" name="favorite" value="{{ product.id }}"
-                        isAuthenticated="{{ user.is_authenticated }}" user="{{ user }}">
-                        <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}"
-                            title="Ajouter aux favoris" id="favorite-img">
-                    </button>
+                    {% if user == product.favorite_substitute.first.email %}
+                    <button class="favorite-button" name="remove-favorite" value="{{ product.id }}"
+                        productID="{{ searched_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
+                        user="{{ user }}">
+                        <img src="{% static 'purbeurreweb\assets\img\icones\favorite2full.png' %}"
+                            title="Retirer des favoris" id="favorite-img-full">
+
+                        {% else %}
+                        <button class="favorite-button" name="add-favorite" value="{{ product.id }}"
+                            productID="{{ searched_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
+                            user="{{ user }}">
+                            <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}"
+                                title="Ajouter aux favoris" id="favorite-img">
+                            {% endif %}
 
                 </div>
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
     {% endblock content %}

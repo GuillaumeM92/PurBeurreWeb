@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Product
+from apps.favorites.models import Favorite
 
 
 def home(request):
@@ -25,9 +26,12 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         """Return the context for the substitutes."""
         substitutes = Product.objects.get_substitutes(self.searched_product)
+        favorites = Favorite.objects.all()
 
         context = super().get_context_data(**kwargs)
         context["products_list"] = substitutes
+        context["favorites"] = favorites
+
         return context
 
 

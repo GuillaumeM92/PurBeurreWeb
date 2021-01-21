@@ -47,3 +47,10 @@ class ProductSubstituteTestCase(TestCase):
         print(
             f"Test 3 : Is {product.categories.first()} equal to {substitute.categories.first()} ?"
         )
+
+
+# python manage.py test apps.purbeurreweb.tests
+# all_products = Product.objects.all()
+# all_products
+# first_product = all_products.first()
+# first_product

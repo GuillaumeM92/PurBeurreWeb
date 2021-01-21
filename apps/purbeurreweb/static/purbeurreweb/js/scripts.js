@@ -2,24 +2,29 @@
 $(".favorite-button").on("click", function (e) {
   e.preventDefault();
 
-  let searched_product_id = document.getElementById("searched-product").getAttribute('productID');
+  let searched_product_id = this.getAttribute("productID");
   let substitute_id = this.value;
   let is_authenticated = this.getAttribute("isAuthenticated");
   let email = this.getAttribute("user");
+  let status = this.getAttribute("name");
 
   if (is_authenticated == "True") {
 
     $.ajax({
-      data: { searched_product_id, substitute_id, email },
-      type: $(this).attr('method'), // GET or POST
+      data: { searched_product_id, substitute_id, is_authenticated, email, status },
+      type: $(this).attr("method"), // GET or POST
       url: "/favorite",
-      success: function (response) {
-      },
+      success: function (response) { },
       error: function (response) {
         alert("an error occured");
       }
     });
-    this.innerHTML = "<span style='color:teal; margin:5px'> Produit ajouté aux favoris ! </span>";
+
+    if (status == "add-favorite") {
+      this.innerHTML = "<span style='color:teal; margin:5px'> Produit ajouté aux favoris ! </span>";
+    } else {
+      this.innerHTML = "<span style='color:teal; margin:5px'> Produit retiré des favoris ! </span>";
+    }
   }
 
   else {
@@ -27,37 +32,6 @@ $(".favorite-button").on("click", function (e) {
     this.innerHTML = "<span> Vous devez être connecté pour ajouter un produit aux favoris ! </span>";
   }
 });
-
-
-// jquery ajax call to remove a product from the user favorites
-$(".remove-favorite-button").on("click", function (e) {
-  e.preventDefault();
-
-  let substitute_id = this.value;
-  let is_authenticated = this.getAttribute("isAuthenticated");
-  let email = this.getAttribute("user");
-
-  if (is_authenticated == "True") {
-
-    $.ajax({
-      data: { substitute_id, email },
-      type: $(this).attr('method'), // GET or POST
-      url: "/rem_favorite",
-      success: function (response) {
-      },
-      error: function (response) {
-        alert("an error occured");
-      }
-    });
-    this.innerHTML = "<span style='color:teal; margin:5px'> Produit retiré des favoris ! </span>";
-  }
-
-  else {
-    console.log("user is not authenticated")
-    this.innerHTML = "<span> Vous devez être connecté pour retirer un produit des favoris ! </span>";
-  }
-});
-
 
 /*!
     * Start Bootstrap - Creative v6.0.2 (https://startbootstrap.com/themes/creative)

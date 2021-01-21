@@ -118,7 +118,7 @@ footer {
 }
 @media (min-width: 768px) {
   #logout-icon {
-    margin-left: 10px;
+    margin-left: 17px;
   }
 }
 @media (min-width: 992px) {
@@ -182,7 +182,7 @@ footer {
 #search-top {
   padding: 2%;
   margin-top: 4px;
-  margin-right: 18px;
+  margin-right: 20px;
   background-color: #C1C1C1;
   font-size: 92%;
 }
@@ -230,6 +230,10 @@ footer {
   font-size: 18px;
   font-weight: bold;
   margin: 5px;
+}
+
+.favorite-button:focus {
+    outline: none;
 }
 
 #search-button {
@@ -416,6 +420,12 @@ footer {
 }
 
 #favorite-img {
+  width: 35px;
+  height: 35px;
+  margin: 5px;
+}
+
+#favorite-img-full {
   width: 35px;
   height: 35px;
   margin: 5px;
@@ -8176,6 +8186,11 @@ button.bg-dark:focus {
   margin-top: 1.5rem !important;
 }
 
+.mt-4-5,
+.my-4-5 {
+  margin-top: 2.1rem !important;
+}
+
 .mr-4,
 .mx-4 {
   margin-right: 1.5rem !important;
@@ -8184,6 +8199,11 @@ button.bg-dark:focus {
 .mb-4,
 .my-4 {
   margin-bottom: 1.5rem !important;
+}
+
+.mb-4-5,
+.my-4-5 {
+  margin-bottom: 1.8rem !important;
 }
 
 .ml-4,
@@ -8200,9 +8220,20 @@ button.bg-dark:focus {
   margin-top: 3rem !important;
 }
 
+.mt-6,
+.my-6 {
+  margin-top: 3.33rem !important;
+}
+
 .mt-10,
 .my-10 {
   margin-top: 7rem !important;
+}
+
+.mt-neg,
+.my-neg {
+  margin-top: -1.7rem !important;
+  margin-bottom: -0.4rem !important;
 }
 
 .mr-5,
@@ -8218,6 +8249,11 @@ button.bg-dark:focus {
 .ml-5,
 .mx-5 {
   margin-left: 3rem !important;
+}
+
+.ml-10,
+.mx-10 {
+  margin-left: 6rem !important;
 }
 
 .p-0 {
