@@ -23,11 +23,11 @@ application (purbeurreweb), faut il que je déplace ce dossier static ?
 
 6/ Dans la requête AJAX, faut-il mettre qqe chose après success / error ? Quoi ?
 
-7/ Favoris: comment faire pour afficher le coeur différent selon les favoris utilisateurs ?
+7/ Favoris: comment faire pour afficher le coeur différent selon les favoris utilisateurs ? ------------ Résolu
 
-8/ Tests à vérifier
+8/ Tests à vérifier ------------------------------------------------------------------------------------ Résolu ? (coverage 90%)
 
-9/ Logique de certaines vues à passer vers des Managers
+9/ Logique de certaines vues à passer vers des Managers  ----------------------------------------------- Résolu ? (à vérifier quand même)
 
 10/ Relire Guide Mentor sur Discord
 
@@ -35,5 +35,24 @@ application (purbeurreweb), faut il que je déplace ce dossier static ?
 
 12/ Définir les variables locales (identifiants, secret_key..)
 
-13/ Améliorer le formatage des produits dans la base de données au moment de l'importation. Par exemple il y a trop de
-produits avec les catégories en anglais.
+13/ Respect de la mise en page du cahier des charges ?
+
+14/ Décrire la stratégie de test dans un document:
+> "Le document décrit ce qui est testé unitairement, ce qui fait l’objet de tests d’intégration et ce qui fait l’objet de test fonctionnels."
+
+15/ Exécution de flake8 à la racine du projet (PEP8) ?
+
+16/ Rédiger le readme sur github
+
+17/ Rédiger la page Mentions Légales
+
+########################################################################################################################################
+
+Fonctionnalités supplémentaires envisagées (pour projet 11) :
+
+1/ ? Améliorer le formatage des produits dans la base de données au moment de l'importation. Par exemple il y a trop de
+produits avec les catégories en anglais ? --------------------------------------------------------------------------------- Résolu
+
+2/ ? Simplifier mon espace utilisateur (Profile) pour respecter le cahier des charges, puis le restaurer pour ce projet ?
+
+3/ Implémenter l'autocomplétion de la recherche utilisateur dans la base de données

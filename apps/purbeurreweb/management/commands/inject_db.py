@@ -1,5 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from apps.purbeurreweb.models import Product, Category
+from apps.favorites.models import Favorite
 import requests
 import django.db.utils
 
@@ -9,12 +10,16 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.counter = 0
+        self.products_counter = 0
+        self.categories_counter = 0
+        self.clean_counter = 0
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl"
         self.params = {"action": "process", "page_size": 1000, "json": True, "page": 1}
         self.products = []
+        self.categories = []
+        self.categories_url = "https://fr.openfoodfacts.org/categories&json=True"
 
-        for num in range(1, 6):
+        for num in range(1, 8):
             self.params["page"] = num
             products = requests.get(self.url, self.params).json().get("products")
 
@@ -22,8 +27,14 @@ class Command(BaseCommand):
                 for product in products:
                     self.products.append(product)
 
-    def inject_products(self):
+        categories = requests.get(self.categories_url).json().get("tags")
+        if categories:
+            for category in categories:
+                if category["products"] >= 1500:
+                    self.categories.append(category)
 
+    def inject_products(self):
+        Favorite.objects.all().delete()
         Product.objects.all().delete()
 
         for product in self.products:
@@ -39,7 +50,7 @@ class Command(BaseCommand):
                     url=product["url"],
                     image=product["selected_images"]["front"]["display"]["fr"],
                 )
-                self.counter += 1
+                self.products_counter += 1
 
             except (KeyError, django.db.utils.IntegrityError) as e:
                 print(e)
@@ -48,62 +59,64 @@ class Command(BaseCommand):
     def inject_categories(self):
         Category.objects.all().delete()
 
-        for product in self.products:
+        for category in self.categories:
             try:
-                product_categories_list = (
-                    product["categories"]
-                    .replace("' ", "'")
-                    .replace(", ", ",")
-                    .split(",")
+                obj, created = Category.objects.get_or_create(
+                    name=category["name"],
                 )
-            except KeyError as e:
+                self.categories_counter += 1
+
+            except (KeyError, django.db.utils.IntegrityError) as e:
                 print(e)
                 pass
-
-            for category in product_categories_list:
-                try:
-                    obj, created = Category.objects.get_or_create(name=category)
-                except KeyError as e:
-                    print(e)
-                    pass
 
     def define_product_categories(self):
-        categories = Category.objects.values("name")
-
-        categories_list = []
-        iterator = 0
-
-        for category in Category.objects.values("name"):
-            cat = categories[iterator]["name"]
-            categories_list.append(cat)
-            iterator += 1
-
         for product in self.products:
             try:
-                product_categories_list = (
+                self.product_categories = (
                     product["categories"]
                     .replace("' ", "'")
                     .replace(", ", ",")
                     .split(",")
                 )
-                product_name = product["product_name_fr"]
+                self.product_name = product["product_name_fr"]
             except KeyError as e:
                 print(e)
                 pass
 
-            for category in product_categories_list:
-                if category in categories_list:
-                    product = Product.objects.filter(name=product_name).first()
-                    category = Category.objects.filter(name=category).first()
+            for category in self.categories:
+                if category["name"] in self.product_categories:
                     try:
-                        product.categories.add(category)
-                    except AttributeError as e:
+                        product = Product.objects.get(name=self.product_name)
+                        cat = Category.objects.get(name=category["name"])
+                        product.categories.add(cat)
+                    except (AttributeError, Product.DoesNotExist) as e:
                         print(e)
+                        print(self.product_name)
                         pass
+
+    def clean_database(self):
+        no_categories = Product.objects.filter(categories__isnull=True)
+        for product in no_categories:
+            product.delete()
+            self.clean_counter += 1
 
     def handle(self, *args, **options):
         self.inject_products()
         self.inject_categories()
         self.define_product_categories()
+        self.clean_database()
 
-        print(f"{self.counter} products were added to the database.")
+        print(f"{self.products_counter} products were added to the database.")
+        print(f"{self.categories_counter} categories were added to the database.")
+        print(f"{self.clean_counter} products were cleaned off the database.")
+
+        no_categories = Product.objects.filter(categories__isnull=True).count()
+        print(no_categories)
+
+
+# from apps.purbeurreweb.models import Product
+# a = Product.objects.filter(categories__isnull=True).count()
+# b = Product.objects.filter(nutriscore__isnull=True).count()
+# c = Product.objects.filter(name__isnull=True).count()
+# d = Product.objects.all().count()
