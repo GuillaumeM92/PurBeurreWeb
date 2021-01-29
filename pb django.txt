@@ -57,7 +57,7 @@ Fonctionnalités supplémentaires envisagées (pour projet 11) :
 1/ Améliorer le formatage des produits dans la base de données au moment de l'importation. Par exemple il y a trop de
 produits avec les catégories en anglais -------------------------------------------------------------------------------- Résolu
 
-2/ ? Simplifier mon espace utilisateur (Profile) pour respecter le cahier des charges, puis le restaurer ?
+2/ ? Simplifier mon espace utilisateur (Profile) pour respecter le cahier des charges, puis le restaurer ? ------------- ??????
 
 3/ Implémenter l'autocomplétion de la recherche utilisateur dans la base de données ------------------------------------ Résolu
 
