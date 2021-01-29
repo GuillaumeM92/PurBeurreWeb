@@ -47,10 +47,11 @@
                     class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                    <form method="GET" action="{% url 'purbeurre-products' %}">
+                    <form method="GET" autocomplete="off" action="{% url 'purbeurre-products' %}">
                         {% csrf_token %}
-                        <li class="nav-item"><input type="text" id="search-top" placeholder="Mon Produit..."
-                                title="Rechercher" name="user_query"></li>
+                        <li class=" autocomplete nav-item"><input type="text" id="search-top"
+                                placeholder="Mon Produit..." title="Rechercher" name="user_query"></li>
+                        <input type="submit" value="Go" id="go">
                     </form>
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'profile' %}"><img
@@ -86,8 +87,11 @@
             <div class="container">
                 <div class="small text-center text-light">Projet réalisé par Guillaume Merle</div>
                 <div class="container">
-                    <div class="small text-center text-muted"><a href="#mentions">Mentions légales</a> | <a
-                            href="#contact">Contact</a></div>
+                    <div class="small text-center text-muted">
+                        <a href="{% url 'purbeurre-legal' %}">Mentions légales</a>
+                        |
+                        <a href="mailto:email@email.com">Contact</a>
+                    </div>
     </footer>
     {% endblock %}
 
@@ -98,7 +102,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <!-- Core theme JS-->
+    <script src="{% static 'purbeurreweb/js/windows-1252-master/windows-1252.js' %}"></script>
+    <script src="{% static 'purbeurreweb/js/product_names_list.js' %}"></script>
     <script src="{% static 'purbeurreweb/js/scripts.js' %}"></script>
+    <script src="{% static 'purbeurreweb/js/autoComplete.js' %}"></script>
 
 </body>
 

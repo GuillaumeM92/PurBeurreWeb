@@ -21,7 +21,8 @@
                 <form method="GET" action="{% url 'purbeurre-products' %}">
                     {% csrf_token %}
                     <input type="text" id="search-middle" placeholder="Mon Produit..." name="user_query">
-                    <input type="submit" id="search-icon" alt="search" class="btn btn-primary btn-md js-scroll-trigger">
+                    <input type="submit" id="search-icon" value="Rechercher" alt="search"
+                        class="btn btn-primary btn-md js-scroll-trigger">
                 </form>
             </div>
         </div>
@@ -79,8 +80,8 @@
             </div>
             <div class="col-lg-4 mr-auto text-center">
                 <i class="fas fa-envelope fa-3x mb-3 text-dark" title="email"></i>
-                <!-- Make sure to change the email address in BOTH the anchor text and the link target below!--><a
-                    class="d-block" href="mailto:support@email.com">support@email.com</a>
+                <!-- Make sure to change the email address in BOTH the anchor text and the link target below!-->
+                <a class="d-block" href="mailto:support@email.com">email@email.com</a>
             </div>
         </div>
     </div>

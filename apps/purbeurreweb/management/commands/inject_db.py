@@ -13,15 +13,21 @@ class Command(BaseCommand):
         self.products_counter = 0
         self.categories_counter = 0
         self.clean_counter = 0
+        self.autocomplete_counter = 0
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl"
         self.params = {"action": "process", "page_size": 1000, "json": True, "page": 1}
         self.products = []
         self.categories = []
         self.categories_url = "https://fr.openfoodfacts.org/categories&json=True"
+        self.all_product_names = []
 
-        for num in range(1, 8):
+        for num in range(1, 30):
             self.params["page"] = num
-            products = requests.get(self.url, self.params).json().get("products")
+            try:
+                products = requests.get(self.url, self.params).json().get("products")
+            except ValueError as e:
+                print(e)
+                pass
 
             if products:
                 for product in products:
@@ -49,6 +55,9 @@ class Command(BaseCommand):
                     labels=product["labels"],
                     url=product["url"],
                     image=product["selected_images"]["front"]["display"]["fr"],
+                    nutrition_facts=product["selected_images"]["nutrition"]["display"][
+                        "fr"
+                    ],
                 )
                 self.products_counter += 1
 
@@ -96,23 +105,51 @@ class Command(BaseCommand):
                         pass
 
     def clean_database(self):
-        no_categories = Product.objects.filter(categories__isnull=True)
-        for product in no_categories:
-            product.delete()
-            self.clean_counter += 1
+        for product in Product.objects.all():
+            if len(product.categories.all()) <= 1:
+                product.delete()
+                self.clean_counter += 1
+
+    def create_product_list_for_autocompletetion_feature(self):
+        doc = "apps/purbeurreweb/static/purbeurreweb/js/product_names_list.js"
+        f = open(doc, "w")
+
+        for product in Product.objects.all():
+            try:
+                self.all_product_names.append(
+                    product.name.encode("cp1252").decode("cp1252")
+                )
+                self.autocomplete_counter += 1
+            except ValueError as e:
+                print(e)
+                pass
+        f.write("var products = ")
+        f.write(str(self.all_product_names))
+
+        f_read = open(doc, "r")
+        content = f_read.read()
+        formatted = (
+            content.replace('"', "'")
+            .replace("['", '["')
+            .replace(", '", ', "')
+            .replace("', ", '", ')
+            .replace("']", '"]')
+            .replace(', aux saveurs de  pommes", ', ", ")
+        )
+        f = open(doc, "w", encoding="utf-8")
+        f.write(formatted)
 
     def handle(self, *args, **options):
         self.inject_products()
         self.inject_categories()
         self.define_product_categories()
         self.clean_database()
+        self.create_product_list_for_autocompletetion_feature()
 
         print(f"{self.products_counter} products were added to the database.")
         print(f"{self.categories_counter} categories were added to the database.")
         print(f"{self.clean_counter} products were cleaned off the database.")
-
-        no_categories = Product.objects.filter(categories__isnull=True).count()
-        print(no_categories)
+        print(f"{self.autocomplete_counter} products added to the autocompletion list.")
 
 
 # from apps.purbeurreweb.models import Product

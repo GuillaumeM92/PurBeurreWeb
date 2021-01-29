@@ -13,7 +13,7 @@ J'ai suivi la doc ici mais sans succès. Pourquoi ?
 https://docs.djangoproject.com/fr/3.0/topics/auth/customizing/#referencing-the-user-model
 
 3/ Comportement du footer sur la page /favorites...
-Comment le faire rester en bas ?
+Comment le faire rester en bas lorsque page vide ?
 bottom : 0; fonctionne mais pose pb sur la page d'accueil
 
 4/ Mon dossier static avec js et css concerne tout le site mais est situé dans le dossier d'une seule
@@ -29,13 +29,13 @@ application (purbeurreweb), faut il que je déplace ce dossier static ?
 
 9/ Logique de certaines vues à passer vers des Managers  ----------------------------------------------- Résolu ? (à vérifier quand même)
 
-10/ Relire Guide Mentor sur Discord
+10/ Relire ensemble Guide Mentor sur Discord
 
 11/ Dans VSC, comment automatiser le lancement du serveur django dans le terminal ?
 
 12/ Définir les variables locales (identifiants, secret_key..)
 
-13/ Respect de la mise en page du cahier des charges ?
+13/ Respect de la mise en page du cahier des charges ? ------------------------------------------------- Résolu (à vérifier quand même)
 
 14/ Décrire la stratégie de test dans un document:
 > "Le document décrit ce qui est testé unitairement, ce qui fait l’objet de tests d’intégration et ce qui fait l’objet de test fonctionnels."
@@ -44,15 +44,21 @@ application (purbeurreweb), faut il que je déplace ce dossier static ?
 
 16/ Rédiger le readme sur github
 
-17/ Rédiger la page Mentions Légales
+17/ Rédiger la page Mentions Légales ------------------------------------------------------------------- Résolu
+
+18/ Pb autocomplete utf8 et mise en page div search middle (largeur)
+
+Importants = 2, 5, 12, 14, 16
 
 ########################################################################################################################################
 
 Fonctionnalités supplémentaires envisagées (pour projet 11) :
 
-1/ ? Améliorer le formatage des produits dans la base de données au moment de l'importation. Par exemple il y a trop de
-produits avec les catégories en anglais ? --------------------------------------------------------------------------------- Résolu
+1/ Améliorer le formatage des produits dans la base de données au moment de l'importation. Par exemple il y a trop de
+produits avec les catégories en anglais -------------------------------------------------------------------------------- Résolu
 
-2/ ? Simplifier mon espace utilisateur (Profile) pour respecter le cahier des charges, puis le restaurer pour ce projet ?
+2/ ? Simplifier mon espace utilisateur (Profile) pour respecter le cahier des charges, puis le restaurer ?
 
-3/ Implémenter l'autocomplétion de la recherche utilisateur dans la base de données
+3/ Implémenter l'autocomplétion de la recherche utilisateur dans la base de données ------------------------------------ Résolu
+
+4/ Améliorer l'algorithme de recherche de substituts -> comparer en détail le nombre de catégories en commun. ---------- Résolu

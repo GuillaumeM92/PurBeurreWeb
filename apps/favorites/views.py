@@ -11,7 +11,7 @@ class FavoritesListView(ListView):
 
 
 def favorite(request):
-    if request.method == "GET" and request.is_ajax():
+    if request.method == "GET":
         response = request.GET
         Favorite.objects.add_or_remove_favorite(response)
         return JsonResponse("success", status=200, safe=False)

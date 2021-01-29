@@ -29,17 +29,54 @@ class ProductManager(models.Manager):
         if not product:
             return None
 
-        product_categories = product.categories.all()
+        # Only keep products with equivalent or higher nutriscore
+        searched_product_nutriscore = product.nutriscore
+        self.products_with_higher_nutriscore = Product.objects.filter(
+            nutriscore__lte=searched_product_nutriscore
+        )
+        # Select the categories of the searched product
+        self.product_categories = product.categories.all()
 
-        for category in product_categories:
-            similar_products = Product.objects.all().filter(categories=category)
-            minimum_required_length = 100
-            if len(similar_products) < minimum_required_length:
+        # Keep only substitutes that share some categories with the searched product
+        for category in self.product_categories:
+            self.similar_products = self.products_with_higher_nutriscore.filter(
+                categories=category
+            )
+            print(len(self.similar_products))
+            limit = 100
+            if len(self.similar_products) < limit:
                 break
 
-        max_displayed_subtitutes = 24
-        substitutes = similar_products.order_by("nutriscore")[:max_displayed_subtitutes]
+        # Count number of shared categories between substitutes and searched product
+        self.iterator = 1
+        self.relevance_list = []
+        self.names_list = []
 
+        for product in self.similar_products:
+            score = 0
+            for category in self.product_categories:
+                if category in product.categories.all():
+                    score += 1
+            self.relevance_list.append((product.name, score))
+
+        # Store the results in an ordered list
+        self.relevance_list.sort(reverse=1, key=lambda score: score[1])
+        self.relevance_list = self.relevance_list[0:24]
+
+        for product in self.relevance_list:
+            self.names_list.append(product[0])
+
+        # Exclude the substitutes that didn't make it to the list
+        for product in self.similar_products:
+            if product.name not in self.names_list:
+                self.similar_products = self.similar_products.exclude(name=product.name)
+
+        # Order the results by nutriscore
+        substitutes = self.similar_products.order_by("nutriscore").order_by(
+            "nutriscore"
+        )
+
+        # Send the results back to the view
         return substitutes
 
 
@@ -56,6 +93,8 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category, related_name="products")
     url = models.CharField(max_length=500)
     image = models.CharField(max_length=500)
+    nutrition_facts = models.CharField(max_length=500)
+
     objects = ProductManager()
 
     def __str__(self):

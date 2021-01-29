@@ -50,12 +50,7 @@ class ProductSubstituteTestCase(TestCase):
         )
 
 
-# python manage.py test apps.purbeurreweb.tests
-# all_products = Product.objects.all()
-# all_products
-# first_product = all_products.first()
-# first_product
-
+############ SELENIUM TESTS #############
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.common import exceptions
@@ -107,7 +102,6 @@ class UserStorySeleniumTest(StaticLiveServerTestCase):
         self.assertEqual(
             "test@email.com", MyUser.objects.get(email="test@email.com").email
         )
-        # breakpoint()
 
     def login(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/login/"))
@@ -117,7 +111,6 @@ class UserStorySeleniumTest(StaticLiveServerTestCase):
         password_input.send_keys("testing1234")
         self.selenium.find_element_by_xpath('//button[@value="Log in"]').click()
         self.assertTrue(MyUser.objects.get(email="test@email.com").is_authenticated)
-        # breakpoint()
 
     def search_product(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/"))
@@ -137,13 +130,11 @@ class UserStorySeleniumTest(StaticLiveServerTestCase):
         self.selenium.find_element_by_name("add-favorite").click()
         time.sleep(1)
         self.assertEqual("pepsi", Favorite.objects.first().base_product.name)
-        # breakpoint()
 
     def remove_favorite(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/favorites/"))
         self.selenium.find_element_by_name("remove-favorite").click()
         self.assertRaises(Favorite.DoesNotExist)
-        # breakpoint()
 
     def logout(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/"))
@@ -155,7 +146,6 @@ class UserStorySeleniumTest(StaticLiveServerTestCase):
             self.assertFalse(
                 MyUser.objects.get(email="test@email.com").is_authenticated
             )
-        # breakpoint()
 
     def test_all(self):
         self.register()
@@ -166,10 +156,4 @@ class UserStorySeleniumTest(StaticLiveServerTestCase):
         self.logout()
 
 
-#  python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_register
-#  python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_login
-#  python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_search_product
-#  python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_add_favorite
-# python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_remove_favorite
-# python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_logout
 # python manage.py test apps.purbeurreweb.tests.MySeleniumTests.test_all

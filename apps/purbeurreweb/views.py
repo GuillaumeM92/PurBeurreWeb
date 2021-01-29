@@ -10,6 +10,11 @@ def home(request):
     return render(request, "purbeurreweb/home.html")
 
 
+def legal(request):
+    """Return the home page."""
+    return render(request, "purbeurreweb/legal.html")
+
+
 class ProductListView(ListView):
     """Product list view."""
 

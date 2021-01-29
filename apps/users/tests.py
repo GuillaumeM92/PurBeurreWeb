@@ -22,10 +22,3 @@ class UserAuthentification(TestCase):
         self.new_user = auth.authenticate(**self.credentials)
         self.assertTrue(self.new_user.is_authenticated)
         # self.login_response = self.client.post("/login/", self.credentials, follow=True)
-
-
-# python manage.py test apps.users.tests
-# all_users = MyUser.objects.all()
-# all_users
-# first_user = all_users.first()
-# first_user

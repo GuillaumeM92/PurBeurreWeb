@@ -1,6 +1,5 @@
 {% extends "purbeurreweb/base.html" %}
 {% load static %}
-{% load myfilters %}
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav3">
     {% endblock navbar %}
@@ -9,32 +8,34 @@
     <div class="masthead5" name="background-image">
         <div class="container mt-5 mb-4">
             <div class="col-12 rounded2 text-center bg-moules-dim">
+                {% if searched_product %}
                 <div class="mt-neg mb-neg">
                     <br>
                     <h3>Produit recherché :</h3>
                     <br>
                 </div>
+                {% endif %}
                 <div name="product-box" class="col-12-custom">
                     <div name="product-image">
                         {% if searched_product %}
                         <a href="{% url 'product-detail' searched_product.id %}"><img src="{{ searched_product.image }}"
-                                id="product-img"></a>
-                        {% if searched_product.nutriscore == 'a' %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\A.png' %}"
-                            id="nutriscore-img"></a>
-                        {% elif searched_product.nutriscore == 'b' %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\B.png' %}"
-                            id="nutriscore-img"></a>
-                        {% elif searched_product.nutriscore == 'c' %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\C.png' %}"
-                            id="nutriscore-img"></a>
-                        {% elif searched_product.nutriscore == 'd' %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\D.png' %}"
-                            id="nutriscore-img"></a>
-                        {% else %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\E.png' %}"
-                            id="nutriscore-img"></a>
-                        {% endif %}
+                                id="product-img">
+                            {% if searched_product.nutriscore == 'a' %}
+                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\A.png' %}"
+                                id="nutriscore-img">
+                            {% elif searched_product.nutriscore == 'b' %}
+                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\B.png' %}"
+                                id="nutriscore-img">
+                            {% elif searched_product.nutriscore == 'c' %}
+                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\C.png' %}"
+                                id="nutriscore-img">
+                            {% elif searched_product.nutriscore == 'd' %}
+                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\D.png' %}"
+                                id="nutriscore-img">
+                            {% else %}
+                            <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\E.png' %}"
+                                id="nutriscore-img">
+                            {% endif %}
                     </div>
                     <div name="product-name" id="searched-product" productID="{{ searched_product.id }}">
                         <a href="{% url 'product-detail' searched_product.id %}" style="font-size: 150%;">
@@ -55,7 +56,7 @@
         </div>
         {% if products_list %}
         <div class="container mt-4-5">
-            <h3 class="text-dark mb-4-5 ml-10">Suggestions de remplacement :</h3>
+            <h3 class="text-dark mb-4-5 ml-7">Suggestions de remplacement :</h3>
             <div class="row col-12 bg-white rounded2 text-center">
                 {% for product in products_list %}
                 <div name="product-box" class="col-4-custom mb-5">
