@@ -15,7 +15,7 @@ class Command(BaseCommand):
         self.clean_counter = 0
         self.autocomplete_counter = 0
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl"
-        self.params = {"action": "process", "page_size": 100, "json": True, "page": 1}
+        self.params = {"action": "process", "page_size": 5, "json": True, "page": 1}
         self.products = []
         self.categories = []
         self.categories_url = "https://fr.openfoodfacts.org/categories&json=True"
@@ -123,13 +123,10 @@ class Command(BaseCommand):
             except ValueError as e:
                 print(e)
                 pass
-        f.write("var products = ")
-        f.write(str(self.all_product_names))
 
-        f_read = open(doc, "r")
-        content = f_read.read()
         formatted = (
-            content.replace('"', "'")
+            str(self.all_product_names)
+            .replace('"', "'")
             .replace("['", '["')
             .replace(", '", ', "')
             .replace("', ", '", ')
@@ -137,6 +134,7 @@ class Command(BaseCommand):
             .replace(', aux saveurs de  pommes", ', ", ")
         )
         f = open(doc, "w", encoding="utf-8")
+        f.write("var products = ")
         f.write(formatted)
 
     def handle(self, *args, **options):
