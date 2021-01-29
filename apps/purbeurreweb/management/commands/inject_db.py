@@ -15,13 +15,13 @@ class Command(BaseCommand):
         self.clean_counter = 0
         self.autocomplete_counter = 0
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl"
-        self.params = {"action": "process", "page_size": 1000, "json": True, "page": 1}
+        self.params = {"action": "process", "page_size": 100, "json": True, "page": 1}
         self.products = []
         self.categories = []
         self.categories_url = "https://fr.openfoodfacts.org/categories&json=True"
         self.all_product_names = []
 
-        for num in range(1, 30):
+        for num in range(1, 10):
             self.params["page"] = num
             try:
                 products = requests.get(self.url, self.params).json().get("products")
@@ -150,10 +150,3 @@ class Command(BaseCommand):
         print(f"{self.categories_counter} categories were added to the database.")
         print(f"{self.clean_counter} products were cleaned off the database.")
         print(f"{self.autocomplete_counter} products added to the autocompletion list.")
-
-
-# from apps.purbeurreweb.models import Product
-# a = Product.objects.filter(categories__isnull=True).count()
-# b = Product.objects.filter(nutriscore__isnull=True).count()
-# c = Product.objects.filter(name__isnull=True).count()
-# d = Product.objects.all().count()
