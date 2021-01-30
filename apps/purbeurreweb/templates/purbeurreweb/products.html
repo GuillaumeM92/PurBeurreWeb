@@ -89,14 +89,14 @@
                     <button class="favorite-button" name="remove-favorite" value="{{ product.id }}"
                         productID="{{ searched_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
                         user="{{ user }}">
-                        <img src="{% static 'purbeurreweb\assets\img\icones\Favorite2full.png' %}"
+                        <img src="{% static 'purbeurreweb/assets/img/icones/Favorite2full.png' %}"
                             title="Retirer des favoris" id="favorite-img-full">
 
                         {% else %}
                         <button class="favorite-button" name="add-favorite" value="{{ product.id }}"
                             productID="{{ searched_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
                             user="{{ user }}">
-                            <img src="{% static 'purbeurreweb\assets\img\icones\Favorite2.png' %}"
+                            <img src="{% static 'purbeurreweb/assets/img/icones/Favorite2.png' %}"
                                 title="Ajouter aux favoris" id="favorite-img">
                             {% endif %}
 
