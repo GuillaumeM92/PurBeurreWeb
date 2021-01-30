@@ -27,43 +27,28 @@ class Command(BaseCommand):
                     self.categories.append(category)
 
     def inject_products(self):
-        Favorite.objects.all().delete()
-        Product.objects.all().delete()
 
-        for num in range(1, 9):
-            self.products = []
-            self.params["page"] = num
+        for product in self.products:
             try:
-                products = requests.get(self.url, self.params).json().get("products")
-            except ValueError as e:
+                obj, created = Product.objects.get_or_create(
+                    name=product["product_name_fr"],
+                    brand=product["brands"],
+                    ingredients=product["ingredients_text_fr"],
+                    allergens=product["allergens"],
+                    nutriscore=product["nutrition_grades_tags"][0],
+                    stores=product["stores"],
+                    labels=product["labels"],
+                    url=product["url"],
+                    image=product["selected_images"]["front"]["display"]["fr"],
+                    nutrition_facts=product["selected_images"]["nutrition"]["display"][
+                        "fr"
+                    ],
+                )
+                self.products_counter += 1
+
+            except (KeyError, django.db.utils.IntegrityError) as e:
                 print(e)
                 pass
-
-            if products:
-                for product in products:
-                    self.products.append(product)
-
-            for product in self.products:
-                try:
-                    obj, created = Product.objects.get_or_create(
-                        name=product["product_name_fr"],
-                        brand=product["brands"],
-                        ingredients=product["ingredients_text_fr"],
-                        allergens=product["allergens"],
-                        nutriscore=product["nutrition_grades_tags"][0],
-                        stores=product["stores"],
-                        labels=product["labels"],
-                        url=product["url"],
-                        image=product["selected_images"]["front"]["display"]["fr"],
-                        nutrition_facts=product["selected_images"]["nutrition"][
-                            "display"
-                        ]["fr"],
-                    )
-                    self.products_counter += 1
-
-                except (KeyError, django.db.utils.IntegrityError) as e:
-                    print(e)
-                    pass
 
     def inject_categories(self):
         Category.objects.all().delete()
@@ -138,9 +123,28 @@ class Command(BaseCommand):
         f.write(formatted)
 
     def handle(self, *args, **options):
-        self.inject_products()
+        Category.objects.all().delete()
+        Favorite.objects.all().delete()
+        Product.objects.all().delete()
+
         self.inject_categories()
-        self.define_product_categories()
+
+        for num in range(1, 9):
+            self.products = []
+            self.params["page"] = num
+            try:
+                products = requests.get(self.url, self.params).json().get("products")
+            except ValueError as e:
+                print(e)
+                pass
+
+            if products:
+                for product in products:
+                    self.products.append(product)
+
+            self.inject_products()
+            self.define_product_categories()
+
         self.clean_database()
         self.create_product_list_for_autocompletetion_feature()
 
