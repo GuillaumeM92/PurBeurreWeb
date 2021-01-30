@@ -46,7 +46,7 @@ application (purbeurreweb), faut il que je déplace ce dossier static ?
 
 17/ Rédiger la page Mentions Légales ------------------------------------------------------------------- Done
 
-18/ Heroku résoudre le chemin vers les images MEDIA (image de profil utilisateur)
+18/ Heroku site rencontre erreurs lorsque env = production / Pourquoi ?
 
 Importants = 2, 5, 12, 14, 16
 
