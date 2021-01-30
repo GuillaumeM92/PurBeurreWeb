@@ -15,13 +15,13 @@ class Command(BaseCommand):
         self.clean_counter = 0
         self.autocomplete_counter = 0
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl"
-        self.params = {"action": "process", "page_size": 5, "json": True, "page": 1}
+        self.params = {"action": "process", "page_size": 1000, "json": True, "page": 1}
         self.products = []
         self.categories = []
         self.categories_url = "https://fr.openfoodfacts.org/categories&json=True"
         self.all_product_names = []
 
-        for num in range(1, 10):
+        for num in range(1, 9):
             self.params["page"] = num
             try:
                 products = requests.get(self.url, self.params).json().get("products")
