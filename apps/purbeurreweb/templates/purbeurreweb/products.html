@@ -21,19 +21,19 @@
                         <a href="{% url 'product-detail' searched_product.id %}"><img src="{{ searched_product.image }}"
                                 id="product-img">
                             {% if searched_product.nutriscore == 'a' %}
-                            <img src="{% static 'purbeurreweb/assets/img/icones/nutriscores/A.png' %}"
+                            <img src="{% static 'purbeurreweb/assets/img/icones/Nutriscores/A.png' %}"
                                 id="nutriscore-img">
                             {% elif searched_product.nutriscore == 'b' %}
-                            <img src="{% static 'purbeurreweb/assets/img/icones/nutriscores/B.png' %}"
+                            <img src="{% static 'purbeurreweb/assets/img/icones/Nutriscores/B.png' %}"
                                 id="nutriscore-img">
                             {% elif searched_product.nutriscore == 'c' %}
-                            <img src="{% static 'purbeurreweb/assets/img/icones/nutriscores/C.png' %}"
+                            <img src="{% static 'purbeurreweb/assets/img/icones/Nutriscores/C.png' %}"
                                 id="nutriscore-img">
                             {% elif searched_product.nutriscore == 'd' %}
-                            <img src="{% static 'purbeurreweb/assets/img/icones/nutriscores/D.png' %}"
+                            <img src="{% static 'purbeurreweb/assets/img/icones/Nutriscores/D.png' %}"
                                 id="nutriscore-img">
                             {% else %}
-                            <img src="{% static 'purbeurreweb/assets/img/icones/nutriscores/E.png' %}"
+                            <img src="{% static 'purbeurreweb/assets/img/icones/Nutriscores/E.png' %}"
                                 id="nutriscore-img">
                             {% endif %}
                     </div>
@@ -64,19 +64,19 @@
                         <a href="{% url 'product-detail' product.id %}"><img src="{{ product.image }}"
                                 id="product-img"></a>
                         {% if product.nutriscore == 'a' %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\A.png' %}"
+                        <img src="{% static 'purbeurreweb\assets\img\icones\Nutriscores\A.png' %}"
                             id="nutriscore-img"></a>
                         {% elif product.nutriscore == 'b' %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\B.png' %}"
+                        <img src="{% static 'purbeurreweb\assets\img\icones\Nutriscores\B.png' %}"
                             id="nutriscore-img"></a>
                         {% elif product.nutriscore == 'c' %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\C.png' %}"
+                        <img src="{% static 'purbeurreweb\assets\img\icones\Nutriscores\C.png' %}"
                             id="nutriscore-img"></a>
                         {% elif product.nutriscore == 'd' %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\D.png' %}"
+                        <img src="{% static 'purbeurreweb\assets\img\icones\Nutriscores\D.png' %}"
                             id="nutriscore-img"></a>
                         {% else %}
-                        <img src="{% static 'purbeurreweb\assets\img\icones\nutriscores\E.png' %}"
+                        <img src="{% static 'purbeurreweb\assets\img\icones\Nutriscores\E.png' %}"
                             id="nutriscore-img"></a>
                         {% endif %}
                     </div>
@@ -89,14 +89,14 @@
                     <button class="favorite-button" name="remove-favorite" value="{{ product.id }}"
                         productID="{{ searched_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
                         user="{{ user }}">
-                        <img src="{% static 'purbeurreweb\assets\img\icones\favorite2full.png' %}"
+                        <img src="{% static 'purbeurreweb\assets\img\icones\Favorite2full.png' %}"
                             title="Retirer des favoris" id="favorite-img-full">
 
                         {% else %}
                         <button class="favorite-button" name="add-favorite" value="{{ product.id }}"
                             productID="{{ searched_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
                             user="{{ user }}">
-                            <img src="{% static 'purbeurreweb\assets\img\icones\favorite2.png' %}"
+                            <img src="{% static 'purbeurreweb\assets\img\icones\Favorite2.png' %}"
                                 title="Ajouter aux favoris" id="favorite-img">
                             {% endif %}
 
