@@ -19,23 +19,23 @@ bottom : 0; fonctionne mais pose pb sur la page d'accueil
 4/ Mon dossier static avec js et css concerne tout le site mais est situé dans le dossier d'une seule
 application (purbeurreweb), faut il que je déplace ce dossier static ?
 
-5/ Sur Heroku, le dossier statique semble ne pas être lu, pourquoi ? Et comment donner l'accès a la BDD ?
+5/ Sur Heroku, le dossier statique semble ne pas être lu, pourquoi ? Et comment donner l'accès a la BDD ? --------- Done
 
 6/ Dans la requête AJAX, faut-il mettre qqe chose après success / error ? Quoi ?
 
-7/ Favoris: comment faire pour afficher le coeur différent selon les favoris utilisateurs ? ------------ Résolu
+7/ Favoris: comment faire pour afficher le coeur différent selon les favoris utilisateurs ? ----------------------- Done
 
-8/ Tests à vérifier ------------------------------------------------------------------------------------ Résolu ? (coverage 90%)
+8/ Tests à vérifier ----------------------------------------------------------------------------------------------- Done ? (coverage 90%)
 
-9/ Logique de certaines vues à passer vers des Managers  ----------------------------------------------- Résolu ? (à vérifier quand même)
+9/ Logique de certaines vues à passer vers des Managers  ------------------------------------------------- Done ? (à vérifier quand même)
 
 10/ Relire ensemble Guide Mentor sur Discord
 
 11/ Dans VSC, comment automatiser le lancement du serveur django dans le terminal ?
 
-12/ Définir les variables locales (identifiants, secret_key..)
+12/ Définir les variables locales (identifiants, secret_key..) ----------------------------------------- Done
 
-13/ Respect de la mise en page du cahier des charges ? ------------------------------------------------- Résolu (à vérifier quand même)
+13/ Respect de la mise en page du cahier des charges ? ------------------------------------------------- Done (à vérifier quand même)
 
 14/ Décrire la stratégie de test dans un document:
 > "Le document décrit ce qui est testé unitairement, ce qui fait l’objet de tests d’intégration et ce qui fait l’objet de test fonctionnels."
@@ -44,9 +44,9 @@ application (purbeurreweb), faut il que je déplace ce dossier static ?
 
 16/ Rédiger le readme sur github
 
-17/ Rédiger la page Mentions Légales ------------------------------------------------------------------- Résolu
+17/ Rédiger la page Mentions Légales ------------------------------------------------------------------- Done
 
-18/ Pb autocomplete utf8 et mise en page div search middle (largeur)
+18/ Heroku résoudre le chemin vers les images MEDIA (image de profil utilisateur)
 
 Importants = 2, 5, 12, 14, 16
 
@@ -55,10 +55,10 @@ Importants = 2, 5, 12, 14, 16
 Fonctionnalités supplémentaires envisagées (pour projet 11) :
 
 1/ Améliorer le formatage des produits dans la base de données au moment de l'importation. Par exemple il y a trop de
-produits avec les catégories en anglais -------------------------------------------------------------------------------- Résolu
+produits avec les catégories en anglais -------------------------------------------------------------------------------- Done
 
 2/ ? Simplifier mon espace utilisateur (Profile) pour respecter le cahier des charges, puis le restaurer ? ------------- ??????
 
-3/ Implémenter l'autocomplétion de la recherche utilisateur dans la base de données ------------------------------------ Résolu
+3/ Implémenter l'autocomplétion de la recherche utilisateur dans la base de données ------------------------------------ Done
 
-4/ Améliorer l'algorithme de recherche de substituts -> comparer en détail le nombre de catégories en commun. ---------- Résolu
+4/ Améliorer l'algorithme de recherche de substituts -> comparer en détail le nombre de catégories en commun. ---------- Done
