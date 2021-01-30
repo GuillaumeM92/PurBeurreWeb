@@ -16,22 +16,9 @@ class Command(BaseCommand):
         self.autocomplete_counter = 0
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl"
         self.params = {"action": "process", "page_size": 1000, "json": True, "page": 1}
-        self.products = []
         self.categories = []
         self.categories_url = "https://fr.openfoodfacts.org/categories&json=True"
         self.all_product_names = []
-
-        for num in range(1, 9):
-            self.params["page"] = num
-            try:
-                products = requests.get(self.url, self.params).json().get("products")
-            except ValueError as e:
-                print(e)
-                pass
-
-            if products:
-                for product in products:
-                    self.products.append(product)
 
         categories = requests.get(self.categories_url).json().get("tags")
         if categories:
@@ -43,27 +30,40 @@ class Command(BaseCommand):
         Favorite.objects.all().delete()
         Product.objects.all().delete()
 
-        for product in self.products:
+        for num in range(1, 9):
+            self.products = []
+            self.params["page"] = num
             try:
-                obj, created = Product.objects.get_or_create(
-                    name=product["product_name_fr"],
-                    brand=product["brands"],
-                    ingredients=product["ingredients_text_fr"],
-                    allergens=product["allergens"],
-                    nutriscore=product["nutrition_grades_tags"][0],
-                    stores=product["stores"],
-                    labels=product["labels"],
-                    url=product["url"],
-                    image=product["selected_images"]["front"]["display"]["fr"],
-                    nutrition_facts=product["selected_images"]["nutrition"]["display"][
-                        "fr"
-                    ],
-                )
-                self.products_counter += 1
-
-            except (KeyError, django.db.utils.IntegrityError) as e:
+                products = requests.get(self.url, self.params).json().get("products")
+            except ValueError as e:
                 print(e)
                 pass
+
+            if products:
+                for product in products:
+                    self.products.append(product)
+
+            for product in self.products:
+                try:
+                    obj, created = Product.objects.get_or_create(
+                        name=product["product_name_fr"],
+                        brand=product["brands"],
+                        ingredients=product["ingredients_text_fr"],
+                        allergens=product["allergens"],
+                        nutriscore=product["nutrition_grades_tags"][0],
+                        stores=product["stores"],
+                        labels=product["labels"],
+                        url=product["url"],
+                        image=product["selected_images"]["front"]["display"]["fr"],
+                        nutrition_facts=product["selected_images"]["nutrition"][
+                            "display"
+                        ]["fr"],
+                    )
+                    self.products_counter += 1
+
+                except (KeyError, django.db.utils.IntegrityError) as e:
+                    print(e)
+                    pass
 
     def inject_categories(self):
         Category.objects.all().delete()

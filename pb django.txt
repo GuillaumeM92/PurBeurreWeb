@@ -46,9 +46,7 @@ application (purbeurreweb), faut il que je déplace ce dossier static ?
 
 17/ Rédiger la page Mentions Légales ------------------------------------------------------------------- Done
 
-18/ Heroku site rencontre erreurs lorsque env = production / Pourquoi ? (voir Heroku logs)
-
-19/ Problème d'affichage des photos de profil.
+18/ Problème d'affichage des photos de profil.
 
 Importants = 2, 5, 12, 14, 16
 
