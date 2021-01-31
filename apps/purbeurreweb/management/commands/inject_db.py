@@ -129,7 +129,7 @@ class Command(BaseCommand):
 
         self.inject_categories()
 
-        for num in range(1, 3):
+        for num in range(1, 50):
             self.products = []
             self.params["page"] = num
             try:
