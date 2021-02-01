@@ -42,13 +42,13 @@ application (purbeurreweb), faut il que je déplace ce dossier static ?
 
 15/ Exécution de flake8 à la racine du projet (PEP8) ?
 
-16/ Rédiger le readme sur github
+16/ Rédiger le readme sur github ----------------------------------------------------------------------- Done
 
 17/ Rédiger la page Mentions Légales ------------------------------------------------------------------- Done
 
 18/ Problème d'affichage des photos de profil.
 
-Importants = 2, 12, 14, 16
+Importants = 2, 12, 14
 
 ########################################################################################################################################
 
