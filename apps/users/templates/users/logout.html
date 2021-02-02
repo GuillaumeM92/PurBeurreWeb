@@ -1,0 +1,41 @@
+{% extends "food/base.html" %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav2">
+    {% endblock navbar %}
+
+    {% block content %}
+    <!-- Logout-->
+    <section class="page-section bg-picture2">
+        <div class="container mt-5 mb-4">
+            <div class="row align-items-center">
+                <div class="col-lg-8 col-md-8 bg-moules-dim rounded2" id="register-form">
+                    <h2>Vous êtes bien déconnecté</h2>
+                    <div class="border-top pt-3">
+                        <small class="text-muted">
+                            <a class="ml-2 h7" href={% url 'login' %}>Se reconnecter ?</a>
+                            <br>
+                            <a class="ml-2 h7" href={% url 'purbeurre-home' %}>Retourner à l'accueil</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock content %}
+
+    {% block footer %}
+    <footer class="bg-light2 py-5">
+        <div class="container">
+            <div class="small text-center text-dark">Copyright © 2020 - Start Bootstrap</div>
+            <div class="container">
+                <div class="small text-center text-dark">Projet réalisé par Guillaume Merle</div>
+                <div class="container">
+                    <div class="small text-center text-muted">
+                        <a href="{% url 'purbeurre-legal' %}">Mentions légales</a>
+                        |
+                        <a href="mailto:email@email.com">Contact</a>
+                    </div>
+                </div>
+    </footer>
+    {% endblock footer %}

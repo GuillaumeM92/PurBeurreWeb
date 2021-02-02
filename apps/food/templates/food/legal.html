@@ -1,0 +1,57 @@
+{% extends "food/base.html" %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav2">
+    {% endblock navbar %}
+
+    {% block content %}
+    <!--  Legal -->
+    <section class="page-section masthead4">
+        <div class="container">
+            <div class="col-lg-12 col-md-8 bg-moules-dim rounded2" id="account">
+                <legend style="font-size:200%;" class="border-bottom mb-4">Mentions Légales</legend>
+                <div class="text-center">
+                    <p>Ce site internet a été réalisé par <b>Guillaume Merle</b> pour le compte de la société
+                        <b>PurBeurre</b>.
+                        <br>
+                        Le code source est disponible <a href="https://github.com/GuillaumeM92/PurBeurreWeb"> ici. </a>
+                    </p>
+                    <br>
+                    <p style="font-weight: bold; font-size: 150%;">Les éléments suivants ont été utilisés :</p>
+                    <p><b>L'icône de carotte</b> de la barre de navigation <br> Créée par
+                        <a href="https://thenounproject.com/term/carrot/29691/">Fabien Jouin.</a>
+                    </p>
+                    <p>Les images de <b>Remy et Colette</b> <br> fournies par <a
+                            href="https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identit%C3%A9">OpenClassRooms</a>
+                        dans le cadre d'un projet d'apprentissage.
+                    </p>
+                    <p><b>Les polices de caractères</b> <br> proviennent de <a href="https://fonts.google.com/">
+                            Google Fonts.</a></p>
+                    <p>Le <b>template</b> <br> est adapté de <a
+                            href="https://github.com/StartBootstrap/startbootstrap-creative">Start Bootstrap
+                            Creative.</a></p>
+                    <p>Les <b>photographies d'arrière-plan</b> <br> sont le fruit du travail de <a
+                            href="https://unsplash.com/@kawin">Kawin Harasai</a>.</p>
+                    <br>
+                    <p><i>Les adresses email renseignées par les utilisateurs au moment de la<br>
+                            création d'un compte sont les seules données recueillies par la plateforme.</i></p>
+                </div>
+            </div>
+    </section>
+    {% endblock content %}
+
+    <!--  Custom Footer -->
+    {% block footer %}
+    <footer class="bg-light2 py-5">
+        <div class="container">
+            <div class="small text-center text-dark">Copyright © 2020 - Start Bootstrap</div>
+            <div class="container">
+                <div class="small text-center text-dark">Projet réalisé par Guillaume Merle</div>
+                <div class="container">
+                    <div class="small text-center text-muted">
+                        <a href="{% url 'purbeurre-legal' %}">Mentions légales</a>
+                        |
+                        <a href="mailto:email@email.com">Contact</a>
+                    </div>
+                </div>
+    </footer>
+    {% endblock footer %}

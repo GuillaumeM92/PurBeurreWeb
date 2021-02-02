@@ -1,0 +1,79 @@
+{% extends "food/base.html" %}
+{% load static %}
+{% load myfilters %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav3">
+    {% endblock navbar %}
+
+    {% block content %}
+    <div class="masthead5" name="background-image">
+        {% if user.favorite_email.all %}
+        <div class="container mt-5 mb-1">
+            <div class="col-12 rounded2 text-center bg-moules-dim">
+                <div>
+                    <br>
+                    <h3>Mes produits favoris.</h3>
+                    <br>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="container mt-6 mb-4">
+            <div class="row col-12 bg-white rounded2 text-center">
+                {% csrf_token %}
+                {% if user.is_authenticated %}
+                {% for favorite in user.favorite_email.all %}
+                <div name="product-box" class="col-4-custom mb-5">
+                    <div name="product-image">
+                        <a href="{% url 'product-detail' favorite.substitute.id %}"><img
+                                src="{{ favorite.substitute.image }}" id="product-img"></a>
+                        {% if favorite.substitute.nutriscore == 'a' %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/A.png' %}" id="nutriscore-img"></a>
+                        {% elif favorite.substitute.nutriscore == 'b' %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/B.png' %}" id="nutriscore-img"></a>
+                        {% elif favorite.substitute.nutriscore == 'c' %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/C.png' %}" id="nutriscore-img"></a>
+                        {% elif favorite.substitute.nutriscore == 'd' %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/D.png' %}" id="nutriscore-img"></a>
+                        {% else %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/E.png' %}" id="nutriscore-img"></a>
+                        {% endif %}
+                    </div>
+                    <div name="product-name">
+                        <a href="{% url 'product-detail' favorite.substitute.id %}"
+                            style="font-size: 135%; color:#343a40">
+                            <b>{{ favorite.substitute.name }}</b></a>
+                    </div>
+                    {% csrf_token %}
+                    <button class="favorite-button" name="remove-favorite" value="{{ favorite.substitute.id }}"
+                        productID="{{ favorite.base_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
+                        user="{{ user }}">
+                        <img src="{% static 'food/assets/img/icones/Favorite2full.png' %}" title="Retirer des favoris"
+                            id="favorite-img">
+                    </button>
+                </div>
+                {% endfor %}
+                {% if not user.favorite_email.all %}
+                <div class="col-12 rounded2 text-center bg-moules-dim">
+                    <br>
+                    <h3>Vous n'avez pas encore ajouté de favoris.</h3>
+                    <br>
+                    <a class="ml-2 h7" href={% url 'purbeurre-home' %} style="font-size: 140%;"> Retourner à
+                        l'accueil</a>
+                    <br>
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="col-12 rounded2 text-center bg-moules-dim">
+                    <br>
+                    <h3>Veuillez vous connecter pour accéder aux favoris.</h3>
+                    <br>
+                    <a class="ml-2 h7" href={% url 'purbeurre-home' %} style="font-size: 140%;"> Retourner à
+                        l'accueil</a>
+                    <br>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endblock content %}

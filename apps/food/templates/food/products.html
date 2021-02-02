@@ -1,0 +1,99 @@
+{% extends "food/base.html" %}
+{% load static %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav3">
+    {% endblock navbar %}
+
+    {% block content %}
+    <div class="masthead5" name="background-image">
+        <div class="container mt-5 mb-4">
+            <div class="col-12 rounded2 text-center bg-moules-dim">
+                {% if searched_product %}
+                <div class="mt-neg mb-neg">
+                    <br>
+                    <h3>Produit recherché :</h3>
+                    <br>
+                </div>
+                {% endif %}
+                <div name="product-box" class="col-12-custom">
+                    <div name="product-image">
+                        {% if searched_product %}
+                        <a href="{% url 'product-detail' searched_product.id %}"><img src="{{ searched_product.image }}"
+                                id="product-img">
+                            {% if searched_product.nutriscore == 'a' %}
+                            <img src="{% static 'food/assets/img/icones/Nutriscores/A.png' %}" id="nutriscore-img">
+                            {% elif searched_product.nutriscore == 'b' %}
+                            <img src="{% static 'food/assets/img/icones/Nutriscores/B.png' %}" id="nutriscore-img">
+                            {% elif searched_product.nutriscore == 'c' %}
+                            <img src="{% static 'food/assets/img/icones/Nutriscores/C.png' %}" id="nutriscore-img">
+                            {% elif searched_product.nutriscore == 'd' %}
+                            <img src="{% static 'food/assets/img/icones/Nutriscores/D.png' %}" id="nutriscore-img">
+                            {% else %}
+                            <img src="{% static 'food/assets/img/icones/Nutriscores/E.png' %}" id="nutriscore-img">
+                            {% endif %}
+                    </div>
+                    <div name="product-name" id="searched-product" productID="{{ searched_product.id }}">
+                        <a href="{% url 'product-detail' searched_product.id %}" style="font-size: 150%;">
+                            <b>{{ searched_product.name }}</b></a>
+                    </div>
+                </div>
+                <div>
+                    {% else %}
+                    <br>
+                    <h3>Désolé, nous n'avons trouvé aucun résultat correspondant.</h3>
+                    <br>
+                    <a class="ml-2 h7" href={% url 'purbeurre-home' %} style="font-size: 140%;"> Retourner à
+                        l'accueil</a>
+                    <br>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if products_list %}
+        <div class="container mt-4-5">
+            <h3 class="text-dark mb-4-5 ml-7">Suggestions de remplacement :</h3>
+            <div class="row col-12 bg-white rounded2 text-center">
+                {% for product in products_list %}
+                <div name="product-box" class="col-4-custom mb-5">
+                    <div name="product-image">
+                        <a href="{% url 'product-detail' product.id %}"><img src="{{ product.image }}"
+                                id="product-img"></a>
+                        {% if product.nutriscore == 'a' %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/A.png' %}" id="nutriscore-img"></a>
+                        {% elif product.nutriscore == 'b' %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/B.png' %}" id="nutriscore-img"></a>
+                        {% elif product.nutriscore == 'c' %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/C.png' %}" id="nutriscore-img"></a>
+                        {% elif product.nutriscore == 'd' %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/D.png' %}" id="nutriscore-img"></a>
+                        {% else %}
+                        <img src="{% static 'food/assets/img/icones/Nutriscores/E.png' %}" id="nutriscore-img"></a>
+                        {% endif %}
+                    </div>
+                    <div name="product-name">
+                        <a href="{% url 'product-detail' product.id %}" style="font-size: 135%; color:#343a40">
+                            <b>{{ product.name }}</b></a>
+                    </div>
+                    {% csrf_token %}
+                    {% if user == product.favorite_substitute.first.email %}
+                    <button class="favorite-button" name="remove-favorite" value="{{ product.id }}"
+                        productID="{{ searched_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
+                        user="{{ user }}">
+                        <img src="{% static 'food/assets/img/icones/Favorite2full.png' %}" title="Retirer des favoris"
+                            id="favorite-img-full">
+
+                        {% else %}
+                        <button class="favorite-button" name="add-favorite" value="{{ product.id }}"
+                            productID="{{ searched_product.id }}" isAuthenticated="{{ user.is_authenticated }}"
+                            user="{{ user }}">
+                            <img src="{% static 'food/assets/img/icones/Favorite2.png' %}" title="Ajouter aux favoris"
+                                id="favorite-img">
+                            {% endif %}
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endblock content %}

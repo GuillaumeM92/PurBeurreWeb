@@ -1,0 +1,59 @@
+{% extends "food/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav2">
+    {% endblock navbar %}
+
+    {% block content %}
+
+    <!--  Profile -->
+    <section class="page-section masthead4">
+        <div class="container">
+            <div class="col-lg-7 col-md-7 bg-moules-dim rounded2" id="account">
+                <div id="profile" class="media">
+                    <img class="rounded-circle account-img mb-4" src="{{ user.profile.image.url }}" title="Avatar">
+                    <div class="media-body">
+                        <h2 class="account-heading ml-1 mt-2" id='profile-email'>{{ user.email }}</h2>
+                        <p class="text-muted2 ml-2"></p>
+                    </div>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Informations du compte</legend>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div id="alert-message2"><b>{{ message }}</b></div>
+                        {% endfor %}
+                        {% endif %}
+
+                        {{ u_form|crispy }}
+                        {{ p_form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Mettre à jour</button>
+                    </div>
+                </form>
+
+            </div>
+    </section>
+    {% endblock content %}
+
+    <!--  Custom Footer -->
+    {% block footer %}
+    <footer class="bg-light2 py-5">
+        <div class="container">
+            <div class="small text-center text-dark">Copyright © 2020 - Start Bootstrap</div>
+            <div class="container">
+                <div class="small text-center text-dark">Projet réalisé par Guillaume Merle</div>
+                <div class="container">
+                    <div class="small text-center text-muted">
+                        <a href="{% url 'purbeurre-legal' %}">Mentions légales</a>
+                        |
+                        <a href="mailto:email@email.com">Contact</a>
+                    </div>
+                </div>
+    </footer>
+    {% endblock footer %}
