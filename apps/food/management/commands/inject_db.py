@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
-from apps.food.models import Product, Category
-from apps.favorites.models import Favorite
+from PurBeurreWeb.apps.food.models import Product, Category
+from PurBeurreWeb.apps.favorites.models import Favorite
 import requests
 import django.db.utils
 
@@ -133,13 +133,15 @@ class Command(BaseCommand):
             self.products = []
             self.params["page"] = num
             try:
-                products = requests.get(self.url, self.params).json().get("products")
+                self.allproducts = (
+                    requests.get(self.url, self.params).json().get("products")
+                )
             except ValueError as e:
                 print(e)
                 pass
 
-            if products:
-                for product in products:
+            if self.allproducts:
+                for product in self.allproducts:
                     self.products.append(product)
 
             self.inject_products()
