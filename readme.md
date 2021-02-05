@@ -4,7 +4,7 @@ Repository for Project 8 from Openclassrooms cursus in Software Development
 Website address : https://purbeurreweb.herokuapp.com/
 
 ## Project Description
-This project is a web applictation built with **Django** to help user to find healthier products of their favorites food.
+This project is a web application built with **Django** to help users find healthier products to their favorite food.
 The application is deployed on **Heroku**.
 
 ## Features

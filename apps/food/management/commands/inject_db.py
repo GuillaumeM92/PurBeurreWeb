@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
-from PurBeurreWeb.apps.food.models import Product, Category
-from PurBeurreWeb.apps.favorites.models import Favorite
+from apps.food.models import Product, Category
+from apps.favorites.models import Favorite
 import requests
 import django.db.utils
 
@@ -15,7 +15,7 @@ class Command(BaseCommand):
         self.clean_counter = 0
         self.autocomplete_counter = 0
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl"
-        self.params = {"action": "process", "page_size": 10, "json": True, "page": 1}
+        self.params = {"action": "process", "page_size": 1000, "json": True, "page": 1}
         self.categories = []
         self.categories_url = "https://fr.openfoodfacts.org/categories&json=True"
         self.all_product_names = []

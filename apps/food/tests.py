@@ -51,7 +51,7 @@ class ProductSubstituteTestCase(TestCase):
 
 
 ############ SELENIUM TESTS #############
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.contrib.staticfiles.testing import LiveServerTestCase
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.common import exceptions
 
@@ -59,12 +59,11 @@ from apps.users.models import MyUser
 from apps.favorites.models import Favorite
 
 driver = WebDriver(
-    executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume/apps/food/chromedriver_win32/chromedriver.exe"
+    executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume/PurBeurreWeb/apps/food/chromedriver_win32/chromedriver.exe"
 )
-driver.get("chrome://settings/clearBrowserData")
 
 
-class UserStorySeleniumTest(StaticLiveServerTestCase):
+class UserStorySeleniumTest(LiveServerTestCase):
     def setUp(self):
         """Create and populate a testing database."""
         Category.objects.create(name="boisson")
@@ -118,7 +117,6 @@ class UserStorySeleniumTest(StaticLiveServerTestCase):
         search = self.selenium.find_element_by_id("search-middle")
         search.send_keys("pepsi")
         self.selenium.find_element_by_xpath('//input[@id="search-icon"]').click()
-        # breakpoint()
 
     def add_favorite(self):
         self.selenium.get(
@@ -152,7 +150,6 @@ class UserStorySeleniumTest(StaticLiveServerTestCase):
         self.register()
         self.login()
         self.search_product()
-        breakpoint()
         self.add_favorite()
         self.remove_favorite()
         self.logout()
