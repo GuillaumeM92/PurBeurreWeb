@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager
 from PIL import Image
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class CustomUserManager(BaseUserManager):
@@ -68,3 +70,15 @@ class Profile(models.Model):
             output_size = (400, 400)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+
+# User = get_user_model()
+
+
+@receiver(post_save, sender=MyUser)
+def create_profile(sender, instance, created, **kwargs):
+    # breakpoint()
+    if created:
+        Profile.objects.create(user=instance)
+    else:
+        instance.profile.save()

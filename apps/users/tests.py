@@ -21,4 +21,3 @@ class UserAuthentification(TestCase):
         self.assertFalse(self.new_user.is_authenticated)
         self.new_user = auth.authenticate(**self.credentials)
         self.assertTrue(self.new_user.is_authenticated)
-        # self.login_response = self.client.post("/login/", self.credentials, follow=True)

@@ -30,51 +30,44 @@ class ProductManager(models.Manager):
             return None
 
         # Only keep products with equivalent or higher nutriscore
-        searched_product_nutriscore = product.nutriscore
-        self.products_with_higher_nutriscore = Product.objects.filter(
-            nutriscore__lte=searched_product_nutriscore
-        )
+        better_products = Product.objects.filter(nutriscore__lte=product.nutriscore)
         # Select the categories of the searched product
-        self.product_categories = product.categories.all()
+        product_categories = product.categories.all()
 
         # Keep only substitutes that share some categories with the searched product
-        for category in self.product_categories:
-            self.similar_products = self.products_with_higher_nutriscore.filter(
-                categories=category
-            )
-            print(len(self.similar_products))
+        similar_products = []
+        for category in product_categories:
+            similar_products = better_products.filter(categories=category)
+            print(len(similar_products))
             limit = 100
-            if len(self.similar_products) < limit:
+            if len(similar_products) < limit:
                 break
 
         # Count number of shared categories between substitutes and searched product
-        self.iterator = 1
-        self.relevance_list = []
-        self.names_list = []
+        relevance_list = []
+        names_list = []
 
-        for product in self.similar_products:
+        for product in similar_products:
             score = 0
-            for category in self.product_categories:
+            for category in product_categories:
                 if category in product.categories.all():
                     score += 1
-            self.relevance_list.append((product.name, score))
+            relevance_list.append((product.name, score))
 
         # Store the results in an ordered list
-        self.relevance_list.sort(reverse=1, key=lambda score: score[1])
-        self.relevance_list = self.relevance_list[0:24]
+        relevance_list.sort(reverse=1, key=lambda score: score[1])
+        relevance_list = relevance_list[0:24]
 
-        for product in self.relevance_list:
-            self.names_list.append(product[0])
+        for product in relevance_list:
+            names_list.append(product[0])
 
         # Exclude the substitutes that didn't make it to the list
-        for product in self.similar_products:
-            if product.name not in self.names_list:
-                self.similar_products = self.similar_products.exclude(name=product.name)
+        for product in similar_products:
+            if product.name not in names_list:
+                similar_products = similar_products.exclude(name=product.name)
 
         # Order the results by nutriscore
-        substitutes = self.similar_products.order_by("nutriscore").order_by(
-            "nutriscore"
-        )
+        substitutes = similar_products.order_by("nutriscore").order_by("nutriscore")
 
         # Send the results back to the view
         return substitutes

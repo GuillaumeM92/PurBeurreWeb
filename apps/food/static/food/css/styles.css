@@ -85,6 +85,10 @@ footer {
   outline: 0 !important;
 }
 
+.blankfiller {
+  margin-top: 40.6vh;
+}
+
 #logopb-icon {
   max-width: 14%;
   max-height: 14%;
@@ -201,6 +205,7 @@ footer {
 @media (min-width: 50px) {
   #go {
     margin-left: 1rem;
+    margin-right: 0.5rem;
   }
 }
 
@@ -6859,6 +6864,7 @@ button.bg-light:focus {
 .bg-picture2 h1 {
   font-size: 2.25rem;
 }
+
 @media (min-width: 992px) {
 .bg-picture2 {
     height: 100vh;
@@ -11194,4 +11200,10 @@ header.masthead2 h1 {
 
 .text-white-87 {
   color: rgba(255, 255, 255, 0.85);
+}
+
+@media screen and (orientation:portrait) {
+  .bg-picture2 {
+    height: 47.5rem;
+  }
 }

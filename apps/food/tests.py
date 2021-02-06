@@ -1,6 +1,11 @@
 """Purbeurreweb tests."""
-from django.test import TestCase
 from .models import Product, Category
+from apps.users.models import MyUser
+from apps.favorites.models import Favorite
+from django.test import TestCase
+from django.contrib.staticfiles.testing import LiveServerTestCase
+from selenium.common import exceptions
+from selenium import webdriver
 import time
 
 
@@ -46,20 +51,15 @@ class ProductSubstituteTestCase(TestCase):
         substitute = Product.objects.get_substitutes(product).first()
         self.assertEqual(product.categories.first(), substitute.categories.first())
         print(
-            f"Test 3 : Is {product.categories.first()} equal to {substitute.categories.first()} ?"
+            f"Test 3 : Is {product.categories.first()} equal to"
+            "{substitute.categories.first()} ?"
         )
 
 
-############ SELENIUM TESTS #############
-from django.contrib.staticfiles.testing import LiveServerTestCase
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.common import exceptions
-
-from apps.users.models import MyUser
-from apps.favorites.models import Favorite
-
-driver = WebDriver(
-    executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume/PurBeurreWeb/apps/food/chromedriver_win32/chromedriver.exe"
+# -------------- SELENIUM TESTS ----------------
+driver = webdriver.Chrome(
+    executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume"
+    "/PurBeurreWeb/apps/food/chromedriver_win32/chromedriver.exe"
 )
 
 
@@ -87,10 +87,11 @@ class UserStorySeleniumTest(LiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls):
+        time.sleep(5)
         cls.selenium.quit()
         super().tearDownClass()
 
-    def register(self):
+    def test_register(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/register/"))
         username_input = self.selenium.find_element_by_name("email")
         username_input.send_keys("test@email.com")
@@ -103,7 +104,7 @@ class UserStorySeleniumTest(LiveServerTestCase):
             "test@email.com", MyUser.objects.get(email="test@email.com").email
         )
 
-    def login(self):
+    def test_login(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/login/"))
         username_input = self.selenium.find_element_by_name("username")
         username_input.send_keys("test@email.com")
@@ -112,30 +113,31 @@ class UserStorySeleniumTest(LiveServerTestCase):
         self.selenium.find_element_by_xpath('//button[@value="Log in"]').click()
         self.assertTrue(MyUser.objects.get(email="test@email.com").is_authenticated)
 
-    def search_product(self):
+    def test_search_product(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/"))
         search = self.selenium.find_element_by_id("search-middle")
         search.send_keys("pepsi")
         self.selenium.find_element_by_xpath('//input[@id="search-icon"]').click()
 
-    def add_favorite(self):
+    def test_add_favorite(self):
         self.selenium.get(
             "%s%s"
             % (
                 self.live_server_url,
-                "/products/?csrfmiddlewaretoken=rw0BQsfaLyiBL9OX1qeHYiSiaJwm74ISl02W9nNSLOXnd4b4StpRjI2hesjGy7vo&user_query=pepsi",
+                "/products/?csrfmiddlewaretoken=rw0BQsfaLyiBL9OX1qeHYiSiaJw"
+                "m74ISl02W9nNSLOXnd4b4StpRjI2hesjGy7vo&user_query=pepsi",
             )
         )
         self.selenium.find_element_by_name("add-favorite").click()
         time.sleep(1)
         self.assertEqual("pepsi", Favorite.objects.first().base_product.name)
 
-    def remove_favorite(self):
+    def test_remove_favorite(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/favorites/"))
         self.selenium.find_element_by_name("remove-favorite").click()
         self.assertRaises(Favorite.DoesNotExist)
 
-    def logout(self):
+    def test_logout(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/"))
         try:
             self.selenium.find_element_by_id("navbar-button").click()
@@ -146,13 +148,13 @@ class UserStorySeleniumTest(LiveServerTestCase):
                 MyUser.objects.get(email="test@email.com").is_authenticated
             )
 
-    def test_all(self):
-        self.register()
-        self.login()
-        self.search_product()
-        self.add_favorite()
-        self.remove_favorite()
-        self.logout()
+    # def test_all(self):
+    #     self.register()
+    #     self.login()
+    #     self.search_product()
+    #     self.add_favorite()
+    #     self.remove_favorite()
+    #     self.logout()
 
 
 # python manage.py test apps.food.tests.MySeleniumTests.test_all

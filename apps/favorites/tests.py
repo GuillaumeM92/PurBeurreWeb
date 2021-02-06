@@ -1,10 +1,9 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.test.client import RequestFactory
 from apps.food.models import Product, Category
 from .models import Favorite
 from apps.users.models import MyUser
 from .views import favorite
-from django.http import QueryDict
 
 
 class AddRemoveFavoriteTestCase(TestCase):

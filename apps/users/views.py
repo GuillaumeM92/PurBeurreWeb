@@ -11,7 +11,10 @@ def register(request):
             form.save()
             messages.success(
                 request,
-                f"Votre compte a été créé avec succès ! Vous pouvez maintenant vous connecter.",
+                str(
+                    "Votre compte a été créé avec succès ! Vous pouvez maintenant"
+                    "vous connecter."
+                ),
             )
             return redirect("login")
     else:
@@ -29,7 +32,7 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f"Votre compte a été modifié avec succès !")
+            messages.success(request, str("Votre compte a été modifié avec succès !"))
             return redirect("profile")
 
     else:
