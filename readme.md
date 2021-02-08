@@ -73,42 +73,77 @@ coverage report
 ```
 
 ## Deploying on Heroku
-- Download and install Heroku CLI
+Download and install Heroku CLI
+```
 https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+```
+or
+```
 sudo snap install --classic heroku
+```
 
-- heroku login
+Create your Heroku app
+```
+heroku login
+heroku:apps create yourappname
+```
+Create the pgsql DB to go along:
+```
+heroku addons:create heroku-postgresql:hobby-dev
+```
 
-- heroku:apps create yourappname
+Configure the environment variables
+```
+heroku config:set SECRET_KEY=yoursecretkey
+heroku config:set EMAIL_USER=youruseremail
+heroku config:set EMAIL_PASSWORD=youruserpassword
+heroku config:set ENV=production
+```
 
-- heroku addons:create heroku-postgresql:hobby-dev
+In your venv
+```
+pip install django-heroku
+pip install gunicorn
+```
 
-- heroku config:set SECRET_KEY=yoursecretkey
-- heroku config:set EMAIL_USER=youruseremail
-- heroku config:set EMAIL_PASSWORD=youruserpassword
-- heroku config:set ENV=production
-
-Dans venv:
-- pip install django-heroku
-Dans settings.py:
-- ajouter:
+In Django settings.py add:
+```
 import django_heroku
-django_heroku.settings(locals())
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"]
+[...]
 DEBUG = False if os.getenv("ENV", "development") == "production" else True
+ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"]
+[...]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+[...]
+django_heroku.settings(locals())
+```
 
-- pip install gunicorn
-
-Créer un Procfile:
+Create a Procfile (make it point to your .wsgi file)
+```
 web: gunicorn config.wsgi --log-file -
+```
 
-Créer requirements.txt
+Create requirements.txt
+```
+pip freeze > requirements.txt
+```
 
-git add
-git commit
+Push to the Heroku remote
+```
+git add .
+git commit -m "message"
 git push heroku master
+```
 
+Setup the DB on Heroku
+```
+heroku run bash
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py inject_db
+```
+
+Done! :)
 
 ## Built With
 * Django
