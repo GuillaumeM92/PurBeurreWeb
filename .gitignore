@@ -144,4 +144,3 @@ doc/
 media/profile_pics/
 staticfiles/
 apps/food/chromedriver_win32/
-apps/food/static/food/js/product_names_list.js
