@@ -85,7 +85,7 @@ sudo snap install --classic heroku
 Create your Heroku app
 ```
 heroku login
-heroku:apps create yourappname
+heroku apps:create --region eu yourappname
 ```
 Create the pgsql DB to go along:
 ```
@@ -140,10 +140,11 @@ Setup the DB on Heroku
 heroku run bash
 python manage.py migrate
 python manage.py createsuperuser
-python manage.py inject_db
+python manage.py inject_db 2
 ```
+NB: '2' is the number of pages to return, you can change this value if you want (1 page = 1000 products)
 
-Done! :)
+Done! =)
 
 ## Built With
 * Django

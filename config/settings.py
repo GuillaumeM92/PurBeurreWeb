@@ -61,6 +61,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+# Environment variables
+load_dotenv()
+
 # Database
 DATABASES = {
     "default": {
@@ -118,9 +121,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_REDIRECT_URL = "purbeurre-home"
 LOGIN_URL = "login"
-
-# Environment variables
-load_dotenv()
 
 # heroku
 django_heroku.settings(locals())

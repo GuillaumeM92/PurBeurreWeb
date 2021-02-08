@@ -122,14 +122,18 @@ class Command(BaseCommand):
         f.write("var products = ")
         f.write(formatted)
 
-    def handle(self, *args, **options):
+    def add_arguments(self, parser):
+        parser.add_argument("pages", type=int, help="How many pages to return")
+
+    def handle(self, *args, **kwargs):
         Category.objects.all().delete()
         Favorite.objects.all().delete()
         Product.objects.all().delete()
+        pages = kwargs["pages"]
 
         self.inject_categories()
 
-        for num in range(1, 10):
+        for num in range(1, pages):
             self.products = []
             self.params["page"] = num
             try:
