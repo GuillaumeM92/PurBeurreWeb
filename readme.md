@@ -145,6 +145,8 @@ python manage.py collectstatic
 ```
 NB: inject_db "3" is the number of pages to return, you can change this value if you want (1 page = 1000 products)
 
+...
+
 Done! =)
 
 ## Built With
