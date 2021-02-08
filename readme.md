@@ -72,7 +72,48 @@ To view the report:
 coverage report
 ```
 
+## Deploying on Heroku
+- Download and install Heroku CLI
+https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+sudo snap install --classic heroku
+
+- heroku login
+
+- heroku:apps create yourappname
+
+- heroku addons:create heroku-postgresql:hobby-dev
+
+- heroku config:set SECRET_KEY=yoursecretkey
+- heroku config:set EMAIL_USER=youruseremail
+- heroku config:set EMAIL_PASSWORD=youruserpassword
+- heroku config:set ENV=production
+
+Dans venv:
+- pip install django-heroku
+Dans settings.py:
+- ajouter:
+import django_heroku
+django_heroku.settings(locals())
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"]
+DEBUG = False if os.getenv("ENV", "development") == "production" else True
+
+- pip install gunicorn
+
+Créer un Procfile:
+web: gunicorn config.wsgi --log-file -
+
+Créer requirements.txt
+
+git add
+git commit
+git push heroku master
+
+
 ## Built With
 * Django
 * psycopg2
 * requests
+
+## Deployed With
+* Heroku
