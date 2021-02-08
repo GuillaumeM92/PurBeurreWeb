@@ -1,5 +1,5 @@
 {% extends "food/base.html" %}
-{% load crispy_forms_tags %}
+{% load static %}
 
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav2">
@@ -10,34 +10,12 @@
     <!--  Profile -->
     <section class="page-section masthead4">
         <div class="container">
-            <div class="col-lg-7 col-md-7 bg-moules-dim rounded2" id="account">
-                <div id="profile" class="media">
-                    <img class="rounded-circle account-img mb-4" src="{{ user.profile.image.url }}" title="Avatar">
-                    <div class="media-body">
-                        <h2 class="account-heading ml-1 mt-2" id='profile-email'>{{ user.email }}</h2>
-                        <p class="text-muted2 ml-2"></p>
-                    </div>
-                </div>
-
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Informations du compte</legend>
-                        {% if messages %}
-                        {% for message in messages %}
-                        <div id="alert-message2"><b>{{ message }}</b></div>
-                        {% endfor %}
-                        {% endif %}
-
-                        {{ u_form|crispy }}
-                        {{ p_form|crispy }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Mettre à jour</button>
-                    </div>
-                </form>
-
+            <div class="col-lg-7 col-md-7 bg-moules-dim rounded2" style="text-align:center" id="account">
+                <legend class="border-bottom mb-4" style="text-align:left">Informations du compte</legend>
+                <img class="rounded-circle account-img mb-4" src="{% static 'food/assets/img/photos/profile.jpg' %}" title="Avatar">
+                <h3 class="ml-1 mt-2 mb-4" id="profile-email">{{ user.email }}</h3>
             </div>
+        </div>
     </section>
     {% endblock content %}
 

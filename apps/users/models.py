@@ -72,12 +72,8 @@ class Profile(models.Model):
             img.save(self.image.path)
 
 
-# User = get_user_model()
-
-
 @receiver(post_save, sender=MyUser)
 def create_profile(sender, instance, created, **kwargs):
-    # breakpoint()
     if created:
         Profile.objects.create(user=instance)
     else:

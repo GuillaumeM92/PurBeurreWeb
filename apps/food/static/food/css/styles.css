@@ -543,32 +543,36 @@ footer {
 
 @media (min-width: 50px) {
   #profile-email {
-    margin-left: 0px;
-    font-size: 60%;
+    font-size: 80%;
   }
 }
+
+@media (min-width: 368px) {
+  #profile-email {
+    font-size: 100%;
+  }
+}
+
 @media (min-width: 576px) {
   #profile-email {
-    margin-left: 0px;
     font-size: 120%;
   }
 }
 
 @media (min-width: 768px) {
   #profile-email {
-    margin-left: 0px;
-    font-size: 90%;
+    font-size: 120%;
   }
 }
 @media (min-width: 992px) {
   #profile-email {
-    font-size: 150%;
+    font-size: 140%;
   }
 }
 
 @media (min-width: 1200px) {
   #profile-email {
-    font-size: 200%;
+    font-size: 150%;
   }
 }
 
@@ -615,11 +619,44 @@ footer {
 }
 
 .account-img {
-  height: 180px;
-  width: 180px;
+  height: 300px;
+  width: 300px;
   margin-left: 2%;
   margin-bottom: 20px;
   margin-right: 4%;
+}
+
+@media (min-width: 50px) {
+  .account-img {
+    height: 160px;
+    width: 160px;
+  }
+}
+@media (min-width: 576px) {
+  .account-img {
+    height: 180px;
+    width: 180px;
+  }
+}
+
+@media (min-width: 768px) {
+  .account-img {
+    height: 200px;
+    width: 200px;
+  }
+}
+@media (min-width: 992px) {
+  .account-img {
+    height: 300px;
+    width: 300px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .account-img {
+    height: 300px;
+    width: 300px;
+  }
 }
 
 hr {
@@ -6896,6 +6933,19 @@ button.bg-light:focus {
 }
 .masthead4 h1 {
   font-size: 2.25rem;
+}
+@media (min-width: 356px) {
+  .masthead4 {
+    min-height: 40rem;
+    padding-top: 4.5rem;
+    padding-bottom: 1rem;
+  }
+  .masthead4 p {
+    font-size: 1.15rem;
+  }
+  .masthead4 h1 {
+    font-size: 3rem;
+  }
 }
 @media (min-width: 992px) {
   .masthead4 {
