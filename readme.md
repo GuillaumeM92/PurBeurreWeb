@@ -140,7 +140,7 @@ Setup the DB on Heroku
 heroku run bash
 python manage.py migrate
 python manage.py createsuperuser
-python manage.py inject_db 2
+python manage.py inject_db 3
 ```
 NB: '2' is the number of pages to return, you can change this value if you want (1 page = 1000 products)
 
