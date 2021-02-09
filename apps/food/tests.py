@@ -92,7 +92,7 @@ class UserStorySeleniumTest(LiveServerTestCase):
         cls.selenium.quit()
         super().tearDownClass()
 
-    def test_1_register(self):
+    def test_register(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/register/"))
         username_input = self.selenium.find_element_by_name("email")
         username_input.send_keys("test@email.com")
@@ -105,8 +105,8 @@ class UserStorySeleniumTest(LiveServerTestCase):
             "test@email.com", MyUser.objects.get(email="test@email.com").email
         )
 
-    def test_2_login(self):
-        self.test_1_register()
+    def test_login(self):
+        self.test_register()
         self.selenium.get("%s%s" % (self.live_server_url, "/login/"))
         username_input = self.selenium.find_element_by_name("username")
         username_input.send_keys("test@email.com")
@@ -115,14 +115,14 @@ class UserStorySeleniumTest(LiveServerTestCase):
         self.selenium.find_element_by_xpath('//button[@value="Log in"]').click()
         self.assertTrue(MyUser.objects.get(email="test@email.com").is_authenticated)
 
-    def test_3_search_product(self):
+    def test_search_product(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/"))
         search = self.selenium.find_element_by_id("search-middle")
         search.send_keys("pepsi")
         self.selenium.find_element_by_xpath('//input[@id="search-icon"]').click()
 
-    def test_4_add_favorite(self):
-        self.test_2_login()
+    def test_add_favorite(self):
+        self.test_login()
         self.selenium.get(
             "%s%s"
             % (
@@ -136,13 +136,13 @@ class UserStorySeleniumTest(LiveServerTestCase):
         self.assertEqual("pepsi", Favorite.objects.first().base_product.name)
 
     def test_remove_favorite(self):
-        self.test_4_add_favorite()
+        self.test_add_favorite()
         self.selenium.get("%s%s" % (self.live_server_url, "/favorites/"))
         self.selenium.find_element_by_name("remove-favorite").click()
         self.assertRaises(Favorite.DoesNotExist)
 
     def test_logout(self):
-        self.test_2_login()
+        self.test_login()
         self.selenium.get("%s%s" % (self.live_server_url, "/"))
         try:
             self.selenium.find_element_by_id("navbar-button").click()
