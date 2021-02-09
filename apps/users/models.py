@@ -64,7 +64,7 @@ class Profile(models.Model):
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
 
-        img = Image.open(self.image.path)
+        img = Image.open("apps/food/static/food/assets/img/photos/profile.jpg")
 
         if img.height > 400 or img.width > 400:
             output_size = (400, 400)

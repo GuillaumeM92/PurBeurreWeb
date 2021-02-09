@@ -5,8 +5,9 @@ from apps.favorites.models import Favorite
 from django.test import TestCase
 from django.contrib.staticfiles.testing import LiveServerTestCase
 from selenium.common import exceptions
-from selenium import webdriver
+
 import time
+from selenium import webdriver
 
 
 class ProductSubstituteTestCase(TestCase):
@@ -36,7 +37,7 @@ class ProductSubstituteTestCase(TestCase):
         self.assertEqual(expected_substitute.id, found_substitute.id)
         print(f"Test 1 : Is {expected_substitute.id} equal to {found_substitute.id} ?")
 
-    def test_substitute_has_better_nutriscore(self):
+    def test_has_better_nutriscore(self):
         """Check if substitute has a better nutriscore."""
         product = self.pepsi
         substitute = Product.objects.get_substitutes(product).first()
@@ -45,7 +46,7 @@ class ProductSubstituteTestCase(TestCase):
             f"Test 2 : Is {product.nutriscore} greater than {substitute.nutriscore} ?"
         )
 
-    def test_substitute_has_similar_category(self):
+    def test_has_similar_category(self):
         """Check if substitute has a similar category."""
         product = self.pepsi
         substitute = Product.objects.get_substitutes(product).first()
@@ -56,10 +57,10 @@ class ProductSubstituteTestCase(TestCase):
         )
 
 
-# -------------- SELENIUM TESTS ----------------
+# -------------------------- SELENIUM TESTS ---------------------------
 driver = webdriver.Chrome(
     executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume"
-    "/PurBeurreWeb/apps/food/chromedriver_win32/chromedriver.exe"
+    "/config/chromedriver.exe"
 )
 
 
@@ -79,6 +80,8 @@ class UserStorySeleniumTest(LiveServerTestCase):
         for product in self.products:
             product.categories.add(self.category)
 
+        # self.user = MyUser.objects.create(email="test@email.com", password="testing1234")
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -87,11 +90,10 @@ class UserStorySeleniumTest(LiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls):
-        time.sleep(5)
         cls.selenium.quit()
         super().tearDownClass()
 
-    def test_register(self):
+    def test_1_register(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/register/"))
         username_input = self.selenium.find_element_by_name("email")
         username_input.send_keys("test@email.com")
@@ -104,7 +106,8 @@ class UserStorySeleniumTest(LiveServerTestCase):
             "test@email.com", MyUser.objects.get(email="test@email.com").email
         )
 
-    def test_login(self):
+    def test_2_login(self):
+        self.test_1_register()
         self.selenium.get("%s%s" % (self.live_server_url, "/login/"))
         username_input = self.selenium.find_element_by_name("username")
         username_input.send_keys("test@email.com")
@@ -113,13 +116,14 @@ class UserStorySeleniumTest(LiveServerTestCase):
         self.selenium.find_element_by_xpath('//button[@value="Log in"]').click()
         self.assertTrue(MyUser.objects.get(email="test@email.com").is_authenticated)
 
-    def test_search_product(self):
+    def test_3_search_product(self):
         self.selenium.get("%s%s" % (self.live_server_url, "/"))
         search = self.selenium.find_element_by_id("search-middle")
         search.send_keys("pepsi")
         self.selenium.find_element_by_xpath('//input[@id="search-icon"]').click()
 
-    def test_add_favorite(self):
+    def test_4_add_favorite(self):
+        self.test_2_login()
         self.selenium.get(
             "%s%s"
             % (
@@ -133,11 +137,13 @@ class UserStorySeleniumTest(LiveServerTestCase):
         self.assertEqual("pepsi", Favorite.objects.first().base_product.name)
 
     def test_remove_favorite(self):
+        self.test_4_add_favorite()
         self.selenium.get("%s%s" % (self.live_server_url, "/favorites/"))
         self.selenium.find_element_by_name("remove-favorite").click()
         self.assertRaises(Favorite.DoesNotExist)
 
     def test_logout(self):
+        self.test_2_login()
         self.selenium.get("%s%s" % (self.live_server_url, "/"))
         try:
             self.selenium.find_element_by_id("navbar-button").click()
@@ -147,14 +153,3 @@ class UserStorySeleniumTest(LiveServerTestCase):
             self.assertFalse(
                 MyUser.objects.get(email="test@email.com").is_authenticated
             )
-
-    # def test_all(self):
-    #     self.register()
-    #     self.login()
-    #     self.search_product()
-    #     self.add_favorite()
-    #     self.remove_favorite()
-    #     self.logout()
-
-
-# python manage.py test apps.food.tests.MySeleniumTests.test_all
