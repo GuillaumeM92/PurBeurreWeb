@@ -5,9 +5,8 @@ from apps.favorites.models import Favorite
 from django.test import TestCase
 from django.contrib.staticfiles.testing import LiveServerTestCase
 from selenium.common import exceptions
-
-import time
 from selenium import webdriver
+import time
 
 
 class ProductSubstituteTestCase(TestCase):
