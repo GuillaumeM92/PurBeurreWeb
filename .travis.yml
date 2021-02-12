@@ -16,4 +16,5 @@ services:
   - postgresql
 
 script:
+  - ./manage.py collectstatic
   - ./manage.py test
