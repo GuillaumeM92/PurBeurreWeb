@@ -9,6 +9,9 @@ def home(request):
     """Return the home page."""
     return render(request, "food/home.html")
 
+def index(request):
+    MAIS POURQUOI EST-IL SI MECHANT ?
+    # ...
 
 def legal(request):
     """Return the home page."""
