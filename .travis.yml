@@ -20,5 +20,5 @@ script:
 
 branches:
   only:
-  - staging
+  - travis
 
