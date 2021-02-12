@@ -6,6 +6,7 @@ from django.test import TestCase
 from django.contrib.staticfiles.testing import LiveServerTestCase
 from selenium.common import exceptions
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import time
 
 
@@ -34,33 +35,36 @@ class ProductSubstituteTestCase(TestCase):
 
         found_substitute = Product.objects.get_substitutes(product).first()
         self.assertEqual(expected_substitute.id, found_substitute.id)
-        print(f"Test 1 : Is {expected_substitute.id} equal to {found_substitute.id} ?")
 
     def test_has_better_nutriscore(self):
         """Check if substitute has a better nutriscore."""
         product = self.pepsi
         substitute = Product.objects.get_substitutes(product).first()
         self.assertGreater(product.nutriscore, substitute.nutriscore)
-        print(
-            f"Test 2 : Is {product.nutriscore} greater than {substitute.nutriscore} ?"
-        )
 
     def test_has_similar_category(self):
         """Check if substitute has a similar category."""
         product = self.pepsi
         substitute = Product.objects.get_substitutes(product).first()
         self.assertEqual(product.categories.first(), substitute.categories.first())
-        print(
-            f"Test 3 : Is {product.categories.first()} equal to"
-            "{substitute.categories.first()} ?"
-        )
 
 
 # -------------------------- SELENIUM TESTS ---------------------------
-driver = webdriver.Chrome(
-    executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume"
-    "/config/chromedriver.exe"
-)
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+
+try:
+    driver = webdriver.Chrome(
+        executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume"
+        "/config/chromedriver.exe"
+    )
+except exceptions.WebDriverException:
+    driver = webdriver.Chrome(
+        "/home/travis/virtualenv/python3.8.6/chromedriver",
+        chrome_options=chrome_options,
+    )
 
 
 class UserStorySeleniumTest(LiveServerTestCase):
@@ -78,8 +82,6 @@ class UserStorySeleniumTest(LiveServerTestCase):
 
         for product in self.products:
             product.categories.add(self.category)
-
-        # self.user = MyUser.objects.create(email="test@email.com", password="testing1234")
 
     @classmethod
     def setUpClass(cls):
@@ -139,6 +141,7 @@ class UserStorySeleniumTest(LiveServerTestCase):
         self.test_add_favorite()
         self.selenium.get("%s%s" % (self.live_server_url, "/favorites/"))
         self.selenium.find_element_by_name("remove-favorite").click()
+        time.sleep(1)
         self.assertRaises(Favorite.DoesNotExist)
 
     def test_logout(self):

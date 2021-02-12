@@ -1,6 +1,6 @@
 // jquery ajax call to add a product to the user favorites
-$(".favorite-button").on("click", function (e) {
-    e.preventDefault();
+$(".favorite-button").on("click", function (error) {
+    error.preventDefault();
 
     let searched_product_id = this.getAttribute("productID");
     let substitute_id = this.value;

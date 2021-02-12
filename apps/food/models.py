@@ -38,7 +38,6 @@ class ProductManager(models.Manager):
         similar_products = []
         for category in product_categories:
             similar_products = better_products.filter(categories=category)
-            print(len(similar_products))
             limit = 100
             if len(similar_products) < limit:
                 break

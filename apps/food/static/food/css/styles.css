@@ -6904,7 +6904,7 @@ button.bg-light:focus {
 
 @media (min-width: 992px) {
 .bg-picture2 {
-    height: 100vh;
+    height: 110vh;
     min-height: 40rem;
     padding-top: 4.5rem;
     padding-bottom: 0;
@@ -11254,6 +11254,6 @@ header.masthead2 h1 {
 
 @media screen and (orientation:portrait) {
   .bg-picture2 {
-    height: 47.5rem;
+    height: 50rem;
   }
 }

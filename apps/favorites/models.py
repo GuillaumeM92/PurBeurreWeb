@@ -20,8 +20,8 @@ class FavoriteManager(models.Manager):
                 pass
             else:
                 obj.delete()
-        except Exception as e:
-            print(e)
+        except Exception as error:
+            print(error)
 
 
 class Favorite(models.Model):

@@ -46,8 +46,8 @@ class Command(BaseCommand):
                 )
                 self.products_counter += 1
 
-            except (KeyError, django.db.utils.IntegrityError) as e:
-                print(e)
+            except (KeyError, django.db.utils.IntegrityError) as error:
+                print(error)
                 pass
 
     def inject_categories(self):
@@ -60,8 +60,8 @@ class Command(BaseCommand):
                 )
                 self.categories_counter += 1
 
-            except (KeyError, django.db.utils.IntegrityError) as e:
-                print(e)
+            except (KeyError, django.db.utils.IntegrityError) as error:
+                print(error)
                 pass
 
     def define_product_categories(self):
@@ -74,8 +74,8 @@ class Command(BaseCommand):
                     .split(",")
                 )
                 self.product_name = product["product_name_fr"]
-            except KeyError as e:
-                print(e)
+            except KeyError as error:
+                print(error)
                 pass
 
             for category in self.categories:
@@ -84,8 +84,8 @@ class Command(BaseCommand):
                         product = Product.objects.get(name=self.product_name)
                         cat = Category.objects.get(name=category["name"])
                         product.categories.add(cat)
-                    except (AttributeError, Product.DoesNotExist) as e:
-                        print(e)
+                    except (AttributeError, Product.DoesNotExist) as error:
+                        print(error)
                         print(self.product_name)
                         pass
 
@@ -113,8 +113,8 @@ class Command(BaseCommand):
                 self.allproducts = (
                     requests.get(self.url, self.params).json().get("products")
                 )
-            except ValueError as e:
-                print(e)
+            except ValueError as error:
+                print(error)
                 pass
 
             if self.allproducts:
