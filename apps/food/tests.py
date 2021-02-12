@@ -7,6 +7,7 @@ from django.contrib.staticfiles.testing import LiveServerTestCase
 from selenium.common import exceptions
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import os
 import time
 
 
@@ -50,17 +51,17 @@ class ProductSubstituteTestCase(TestCase):
 
 
 # -------------------------- SELENIUM TESTS ---------------------------
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-dev-shm-usage")
-
-try:
+if os.name == "nt":
     driver = webdriver.Chrome(
         executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume"
         "/config/chromedriver.exe"
     )
-except exceptions.WebDriverException:
+
+else:
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     driver = webdriver.Chrome(
         "/home/travis/virtualenv/python3.8.6/chromedriver",
         chrome_options=chrome_options,
