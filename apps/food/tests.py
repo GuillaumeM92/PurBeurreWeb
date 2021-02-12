@@ -7,6 +7,7 @@ from django.contrib.staticfiles.testing import LiveServerTestCase
 from selenium.common import exceptions
 from selenium import webdriver
 import time
+import os
 
 
 class ProductSubstituteTestCase(TestCase):
@@ -57,11 +58,7 @@ class ProductSubstituteTestCase(TestCase):
 
 
 # -------------------------- SELENIUM TESTS ---------------------------
-driver = webdriver.Chrome(
-    executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume"
-    "/config/chromedriver.exe"
-)
-
+driver = webdriver.Chrome(executable_path=os.getenv("CHROME_DRIVER_PATH"))
 
 class UserStorySeleniumTest(LiveServerTestCase):
     def setUp(self):
