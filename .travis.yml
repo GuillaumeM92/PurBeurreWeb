@@ -7,7 +7,7 @@ addons:
 
 before_script:
   - pip install -r requirements.txt
-  - wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
+  - wget https://chromedriver.storage.googleapis.com/88.0.4324.150/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip -d /home/travis/virtualenv/python3.8.6/
   - export CHROME_BIN=chromium-browser
   - "export DISPLAY=:99.0"
@@ -17,8 +17,3 @@ services:
 
 script:
   - ./manage.py test
-
-# branches:
-#   only:
-#   - travis
-
