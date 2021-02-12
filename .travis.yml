@@ -16,7 +16,7 @@ services:
   - postgresql
 
 script:
-  - ./manage.py test apps.food.tests apps.favorites.tests apps.users.tests
+  - ./manage.py test
 
 # branches:
 #   only:
