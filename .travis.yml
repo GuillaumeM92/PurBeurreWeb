@@ -18,7 +18,7 @@ services:
 script:
   - ./manage.py test apps.food.tests apps.favorites.tests apps.users.tests
 
-branches:
-  only:
-  - travis
+# branches:
+#   only:
+#   - travis
 
