@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from apps.food.models import Product, Category
 import requests
-import django.db.utils
+import django.db.utils as django_error
 import datetime
 
 
@@ -51,7 +51,7 @@ class Command(BaseCommand):
                 else:
                     self.updated_product_counter += 1
 
-            except (KeyError, django.db.utils.IntegrityError) as error:
+            except (KeyError, django_error.IntegrityError) as error:
                 print(error)
                 pass
 
@@ -66,7 +66,7 @@ class Command(BaseCommand):
                 else:
                     self.updated_category_counter += 1
 
-            except (KeyError, django.db.utils.IntegrityError) as error:
+            except (KeyError, django_error.IntegrityError) as error:
                 print(error)
                 pass
 
@@ -103,7 +103,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         pages = kwargs["pages"]
 
-        self.inject_categories()
+        try:
+            self.inject_categories()
+        except django_error.DataError as error:
+            print(error)
+            pass
 
         for num in range(0, pages):
             self.products = []
