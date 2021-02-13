@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if os.getenv("ENV", "development") == "production" else True
+DEBUG = True if os.getenv("ENV") == "dev" else False
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ["purbeurreweb.herokuapp.com", "localhost", "127.0.0.1", "45.77.62.93"]
