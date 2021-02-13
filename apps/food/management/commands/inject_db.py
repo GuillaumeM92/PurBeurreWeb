@@ -51,7 +51,11 @@ class Command(BaseCommand):
                 else:
                     self.updated_product_counter += 1
 
-            except (KeyError, django_error.IntegrityError) as error:
+            except (
+                KeyError,
+                django_error.IntegrityError,
+                django_error.DataError,
+            ) as error:
                 print(error)
                 pass
 
@@ -103,11 +107,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         pages = kwargs["pages"]
 
-        try:
-            self.inject_categories()
-        except django_error.DataError as error:
-            print(error)
-            pass
+        self.inject_categories()
 
         for num in range(0, pages):
             self.products = []
