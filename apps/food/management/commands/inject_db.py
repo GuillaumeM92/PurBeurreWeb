@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from apps.food.models import Product, Category
 import requests
 import django.db.utils
+import datetime
 
 
 class Command(BaseCommand):
@@ -124,6 +125,8 @@ class Command(BaseCommand):
 
         self.clean_database()
 
+        now = datetime.datetime.now()
+        print(now)
         print(f"{self.products_counter} products were added to the database.")
         print(f"{self.updated_product_counter} products were updated.")
         print(f"{self.categories_counter} categories were added to the database.")
