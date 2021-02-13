@@ -30,6 +30,7 @@ pytz==2020.1
 regex==2020.11.13
 requests==2.24.0
 selenium==3.141.0
+sentry-sdk==0.20.1
 six==1.15.0
 snowballstemmer==2.0.0
 sqlparse==0.3.1
