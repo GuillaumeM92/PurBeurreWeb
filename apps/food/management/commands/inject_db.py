@@ -17,7 +17,7 @@ class Command(BaseCommand):
         self.clean_counter = 0
         self.autocomplete_counter = 0
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl"
-        self.params = {"action": "process", "page_size": 100, "json": True, "page": 1}
+        self.params = {"action": "process", "page_size": 1000, "json": True, "page": 1}
         self.categories = []
         self.categories_url = "https://fr.openfoodfacts.org/categories&json=True"
         self.all_product_names = []
@@ -25,7 +25,7 @@ class Command(BaseCommand):
         categories = requests.get(self.categories_url).json().get("tags")
         if categories:
             for category in categories:
-                if category["products"] >= 4500:
+                if category["products"] >= 1500:
                     self.categories.append(category)
 
     def inject_products(self):
@@ -121,7 +121,6 @@ class Command(BaseCommand):
                     self.products.append(product)
 
             self.inject_products()
-            # self.define_product_categories()
 
         self.clean_database()
 
