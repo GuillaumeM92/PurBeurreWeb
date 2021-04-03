@@ -173,13 +173,18 @@ class UserStorySeleniumTest(LiveServerTestCase):
         self.selenium.get(
             "%s%s" % (self.live_server_url, "/password-reset-confirm/MQ/%s" % (token))
         )
-        self.selenium.find_element_by_name("password1").send_keys("newPassword1")
-        breakpoint()
-        self.selenium.find_element_by_name("password2").send_keys("newPassword1")
-        self.selenium.find_element_by_name("action").submit()
+        password1_input = self.selenium.find_element_by_name("new_password1")
+        password1_input.send_keys("newPassword123")
+        password2_input = self.selenium.find_element_by_name("new_password2")
+        password2_input.send_keys("newPassword123")
+        self.selenium.find_element_by_xpath(
+            '//*[@id="login-form"]/form/div/button'
+        ).click()
 
-        alert = self.selenium.find_element_by_css_selector(".alert-success")
-        self.assertIn("Password successfully changed.", alert.text)
+        alert = self.selenium.find_element_by_xpath('//*[@id="login-form"]/div')
+        print(alert)
+        print(alert.text)
+        self.assertIn("Votre mot de passe a été modifié.", alert.text)
 
     def test_logout(self):
         self.test_login()

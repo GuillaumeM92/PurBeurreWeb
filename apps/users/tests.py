@@ -21,15 +21,3 @@ class UserAuthentification(TestCase):
         self.assertFalse(self.new_user.is_authenticated)
         self.new_user = auth.authenticate(**self.credentials)
         self.assertTrue(self.new_user.is_authenticated)
-
-    # def test_password_reset(self):
-    #     """Check if password reset works."""
-    #     self.new_user = auth.get_user(self.client)
-    #     self.new_user = auth.authenticate(**self.credentials)
-    #     user_password = self.new_user.password
-
-    #     breakpoint()
-    #     self.assertNotEqual(user_password, new_user_password)
-
-
-# self.new_user.id
