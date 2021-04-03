@@ -49,12 +49,17 @@ class ProductSubstituteTestCase(TestCase):
         substitute = Product.objects.get_substitutes(product).first()
         self.assertEqual(product.categories.first(), substitute.categories.first())
 
+    def test_substitutes_order(self):
+        """Check if substitutes are ordered from best to worst."""
+        product = self.pepsi
+        substitute = Product.objects.get_substitutes(product).all()
+        self.assertGreater(substitute.last().nutriscore, substitute.first().nutriscore)
+
 
 # -------------------------- SELENIUM TESTS ---------------------------
 if os.name == "nt":
     driver = webdriver.Chrome(
-        executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P8_merle_guillaume"
-        "/config/chromedriver.exe"
+        executable_path="C:/Users/Guillaume/Desktop/Formation OPC/P11_merle_guillaume/code/config/chromedriver.exe"
     )
 
 else:
