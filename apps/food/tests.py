@@ -129,6 +129,19 @@ class UserStorySeleniumTest(LiveServerTestCase):
         search.send_keys("pepsi")
         self.selenium.find_element_by_xpath('//input[@id="search-icon"]').click()
 
+    def test_autocomplete(self):
+        self.selenium.get("%s%s" % (self.live_server_url, "/"))
+        search = self.selenium.find_element_by_id("search-middle")
+        search.send_keys("coca-co")
+        self.selenium.find_element_by_xpath(
+            '//div[@id="search-middleautocomplete-list"]'
+        ).click()
+        autocompleted_search = self.selenium.find_element_by_id(
+            "search-middle"
+        ).get_attribute("value")
+        self.selenium.find_element_by_xpath('//input[@id="search-icon"]').click()
+        self.assertEqual("coca-cola", autocompleted_search)
+
     def test_add_favorite(self):
         self.test_login()
         self.selenium.get(
@@ -149,6 +162,24 @@ class UserStorySeleniumTest(LiveServerTestCase):
         self.selenium.find_element_by_name("remove-favorite").click()
         time.sleep(1)
         self.assertRaises(Favorite.DoesNotExist)
+
+    def test_password_reset(self):
+        from django.contrib.auth.tokens import default_token_generator
+
+        self.test_login()
+        user = MyUser.objects.first()
+        token = default_token_generator.make_token(user)
+
+        self.selenium.get(
+            "%s%s" % (self.live_server_url, "/password-reset-confirm/MQ/%s" % (token))
+        )
+        self.selenium.find_element_by_name("password1").send_keys("newPassword1")
+        breakpoint()
+        self.selenium.find_element_by_name("password2").send_keys("newPassword1")
+        self.selenium.find_element_by_name("action").submit()
+
+        alert = self.selenium.find_element_by_css_selector(".alert-success")
+        self.assertIn("Password successfully changed.", alert.text)
 
     def test_logout(self):
         self.test_login()
