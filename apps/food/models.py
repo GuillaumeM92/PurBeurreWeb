@@ -30,7 +30,7 @@ class ProductManager(models.Manager):
             return None
 
         # Only keep products with equivalent or higher nutriscore
-        better_products = Product.objects.filter(nutriscore__lte=product.nutriscore)
+        better_products = Product.objects.filter(nutriscore__gte=product.nutriscore)
         # Select the categories of the searched product
         product_categories = product.categories.all()
 
@@ -54,7 +54,7 @@ class ProductManager(models.Manager):
             relevance_list.append((product.name, score))
 
         # Store the results in an ordered list
-        relevance_list.sort(reverse=1, key=lambda score: score[1])
+        relevance_list.sort(key=lambda score: score[1])
         relevance_list = relevance_list[0:24]
 
         for product in relevance_list:
