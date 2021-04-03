@@ -101,6 +101,33 @@ class Command(BaseCommand):
                 product.delete()
                 self.clean_counter += 1
 
+    def create_autocomplete_list(self):
+        doc = "apps/food/static/food/js/product_names_list.js"
+        f = open(doc, "w")
+
+        for product in Product.objects.all():
+            try:
+                self.all_product_names.append(
+                    product.name.encode("cp1252").decode("cp1252")
+                )
+                self.autocomplete_counter += 1
+            except ValueError as e:
+                print(e)
+                pass
+
+        formatted = (
+            str(self.all_product_names)
+            .replace('"', "'")
+            .replace("['", '["')
+            .replace(", '", ', "')
+            .replace("', ", '", ')
+            .replace("']", '"]')
+            .replace(', aux saveurs de  pommes", ', ", ")
+        )
+        f = open(doc, "w", encoding="utf-8")
+        f.write("var products = ")
+        f.write(formatted)
+
     def add_arguments(self, parser):
         parser.add_argument("pages", type=int, help="How many pages to return")
 
@@ -127,6 +154,7 @@ class Command(BaseCommand):
             self.inject_products()
 
         self.clean_database()
+        self.create_autocomplete_list()
 
         now = datetime.datetime.now()
         print(now)
@@ -135,3 +163,4 @@ class Command(BaseCommand):
         print(f"{self.categories_counter} categories were added to the database.")
         print(f"{self.updated_category_counter} categories were updated.")
         print(f"{self.clean_counter} products were cleaned off the database.")
+        print(f"{self.autocomplete_counter} products added to the autocompletion list.")
