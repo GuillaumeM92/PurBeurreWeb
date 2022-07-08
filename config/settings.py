@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True if os.getenv("ENV") == "dev" else False
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
-ALLOWED_HOSTS = ["purbeurreweb.herokuapp.com", "localhost", "127.0.0.1", "45.77.62.93"]
+ALLOWED_HOSTS = ["purbeurreweb.guillaume-merle.me"]
 
 # Application definition
 INSTALLED_APPS = [
