@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True if os.getenv("ENV") == "dev" else False
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
-ALLOWED_HOSTS = ["purbeurreweb.guillaume-merle.me"]
+ALLOWED_HOSTS = ["purbeurre.guillaume-merle.me"]
 
 # Application definition
 INSTALLED_APPS = [
