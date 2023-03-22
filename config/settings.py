@@ -1,5 +1,4 @@
 import os
-import django_heroku
 from dotenv import load_dotenv
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -122,9 +121,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_REDIRECT_URL = "purbeurre-home"
 LOGIN_URL = "login"
-
-# heroku
-django_heroku.settings(locals())
 
 # sentry
 sentry_sdk.init(
