@@ -111,7 +111,7 @@ In Django settings.py add:
 import django_heroku
 [...]
 DEBUG = False if os.getenv("ENV", "development") == "production" else True
-ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 [...]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 [...]
