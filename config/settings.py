@@ -13,9 +13,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if os.getenv("ENV") == "prod" else True
+DEBUG = False
+ALLOWED_HOSTS = [os.getenv("HOST")]
 
-ALLOWED_HOSTS = [".purbeurre.guillaume-merle.fr"] if os.getenv("ENV") == "prod" else ["localhost", "127.0.0.1", '0.0.0.0']
+if os.getenv("ENV") == 'dev':
+    DEBUG = True
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", '0.0.0.0']
 
 # Application definition
 INSTALLED_APPS = [
@@ -65,16 +68,24 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "pur_beurre_web_db",
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": "localhost",
-        "PORT": "5432",
+if not DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "pur_beurre_web_db",
+            "USER": os.getenv("DB_USER"),
+            "PASSWORD": os.getenv("DB_PASSWORD"),
+            "HOST": "localhost",
+            "PORT": "5432",
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 AUTH_USER_MODEL = "users.MyUser"
