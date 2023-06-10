@@ -13,10 +13,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv("ENV") == "dev" else False
-DEBUG_PROPAGATE_EXCEPTIONS = True
+DEBUG = False if os.getenv("ENV") == "prod" else True
 
-ALLOWED_HOSTS = ["purbeurre.guillaume-merle.me"]
+ALLOWED_HOSTS = [".purbeurre.guillaume-merle.fr"] if os.getenv("ENV") == "prod" else ["localhost", "127.0.0.1", '0.0.0.0']
 
 # Application definition
 INSTALLED_APPS = [
