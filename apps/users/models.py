@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager
 from PIL import Image
 from django.db.models.signals import post_save
